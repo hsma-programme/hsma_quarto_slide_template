@@ -21,7 +21,6 @@ $link-color: #42affa;
   line-height: 0.9em;
   letter-spacing: 0.02em;
   text-shadow: none;
-  font-family: 'Lexend';
  }
 
  .reveal h1 {
@@ -30,7 +29,6 @@ $link-color: #42affa;
    line-height: 0.9em;
    letter-spacing: 0.02em;
    text-shadow: -1px -1px 4px black;
-   font-family: 'Lexend';
   }
 
 p {
@@ -38,11 +36,21 @@ p {
 }
 
 body {
-    font-family: 'Lexend';
     font-size: 22px;
 }
 
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: #8f0000; /* This sets the progress bar to dark red */
+}
 
+.reveal div.slide-menu-button a i.fas.fa-bars {
+    filter: brightness(10) saturate(0);
+}
+
+.reveal .slide-chalkboard-buttons i.fas {
+    filter: brightness(10) saturate(0);
+}
 
 // /* Style top-level slide sections */
 // .reveal .slides > section {
@@ -90,12 +98,12 @@ body {
   max-width: 95% !important;
 }
 
+.cell-output {
+  width: 95% !important;
+  max-width: 95% !important;
+}
+
 iframe.stlite {
     width: 1px;
     min-width: 95% !important;
 }
-
-// .slide-background-content{
-//   background-image: "https://raw.githubusercontent.com/Bergam0t/lambda_des_workshop_slides/refs/heads/main/banner.png";
-//   background-size: 100% 100%;
-// }

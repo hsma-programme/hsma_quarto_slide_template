@@ -3,5 +3,6 @@ project:
   output-dir: docs
 
 format:
-  html:
-    embed-resources: true
+  revealjs:
+    execute:
+      freeze: auto
