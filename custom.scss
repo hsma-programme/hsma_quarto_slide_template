@@ -190,6 +190,12 @@ iframe.stlite {
   justify-content: center !important;
 }
 
+/* Ensure column containers stretch to full width inside flex-slides */
+.reveal .slides section.stack:has(> section.no-box) section > .columns {
+  width: 100% !important;
+  flex-grow: 1; /* Allows the columns to fill vertical space if needed */
+}
+
 // Complex value box
 .value-box {
   display: flex;
