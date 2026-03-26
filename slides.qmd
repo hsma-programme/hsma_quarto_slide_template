@@ -56,6 +56,7 @@ filters:
   - stlite # modified stlite extension
   - reveal-header
   - bergam0t/value-box
+  - bergam0t/focus-list
 ---
 
 # Section Header Example
@@ -298,3 +299,51 @@ This appears FIRST (Index 1)
 :::
 
 ::::
+
+
+## Fade-in-then-out-lists
+
+You can use the {.focus-list} div to auto fade in and out as you move through a list
+
+::: {.focus-list}
+* First important point
+* Second important point (previous one dims!)
+* Third important point
+:::
+
+
+## Fade-in-then-out-lists
+
+This works with indented lists too
+
+::: {.focus-list}
+* First important point
+  * And a sub-point on that matter
+* Second important point (previous one dims!)
+  * And a sub-point on that matter
+    * ... and a really nested point
+* Third important point
+:::
+
+
+
+
+## Code focus
+
+Using reunings code focus extension, we can highlight different parts of a code example.
+
+```{python}
+#| eval: false
+answer = "42"
+question = "What is the answer to life, the universe, and everything?"
+
+print(f"Question: '{question}'\n Answer: '{answer}'")
+```
+
+::: {.fragment .current-only data-code-focus="1"}
+When this fragment is shown, the first line of code will have the `focus` class added to it and it gets highlighted.
+:::
+
+::: {.fragment .current-only data-code-focus="3"}
+Then this line when we move through
+:::
