@@ -183,6 +183,37 @@ Then this will appear when you're ready.
 
 :::
 
+## Simple boxes 1
+
+::: {.value-box-simple .bg-amber style="font-size: 1.25rem;"}
+
+**Value boxes**
+
+A simple value box can help convey points, especially when combined with fragments.
+
+:::
+
+## Complex icon box layouts with index parameter
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Left Column
+::: {.value-box fragment="true" index="2"}
+This appears SECOND (Index 2)
+:::
+:::
+
+::: {.column width="50%"}
+### Right Column
+::: {.value-box fragment="true" index="1"}
+This appears FIRST (Index 1)
+:::
+:::
+
+::::
+
+
 
 
 # Other features
@@ -193,6 +224,45 @@ There are some speaker notes on this slide - but you can't see them unless you'r
 
 :::{.notes}
 Aha! I'm secret notes.
+:::
+
+
+## No box {.no-box}
+
+Use the {.no-box} syntax next to your slide title to remove the background grey box.
+
+This only works on second level slides - not # level slides.
+
+
+## Simple boxes 2
+
+::: {.fragment .fade-in-then-semi-out}
+
+::: {.value-box-simple .bg-light-blue style="font-size: 1.25rem;"}
+
+**Value boxes**
+
+A simple value box can help convey points, especially when combined with fragments.
+
+:::
+
+:::
+
+::: {.fragment}
+
+::: {.value-box-simple .bg-amber style="font-size: 1.25rem;"}
+
+**Value boxes**
+
+Like this!
+
+:::
+
+
+:::
+
+
+
 
 ## Icon boxes
 
@@ -200,6 +270,31 @@ Aha! I'm secret notes.
 And here's a more advanced type of box with an icon
 :::
 
-::: {.value-box value="Big text" icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center"}
+::: {.value-box value="Big text" icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center" fragment="fade-in-then-out"}
 And here's a more advanced type of box with an icon and a value
 :::
+
+::: {.value-box fragment="strike" width="60%" align="center"}
+And one without an icon
+:::
+
+
+## Complex icon box layouts with index parameter
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Left Column
+::: {.value-box fragment="true" index="2"}
+This appears SECOND (Index 2)
+:::
+:::
+
+::: {.column width="50%"}
+### Right Column
+::: {.value-box fragment="true" index="1"}
+This appears FIRST (Index 1)
+:::
+:::
+
+::::

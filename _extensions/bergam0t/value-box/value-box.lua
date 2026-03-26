@@ -1,8 +1,7 @@
 function Div(el)
-  -- Check if this Div block has the 'value-box' class
   if el.classes:includes("value-box") then
 
-    -- Extract attributes (with fallbacks if missing)
+    -- Existing attributes
     local icon  = el.attributes["icon"] or ""
     local color = el.attributes["color"] or "bg-light-blue"
     local title = el.attributes["title"] or ""
@@ -10,26 +9,32 @@ function Div(el)
     local width = el.attributes["width"] or "100%"
     local align = el.attributes["align"] or "left"
 
-    -- Build the HTML snippets
-    local icon_html  = icon  ~= "" and ('<div class="icon"><i class="bi ' .. icon .. '"></i></div>') or ""
-    local title_html = title ~= "" and ('<div class="title">'  .. title .. '</div>') or ""
-    local value_html = value ~= "" and ('<div class="value">'  .. value .. '</div>') or ""
+    -- Fragment logic
+    local fragment_attr = el.attributes["fragment"]
+    local fragment_class = ""
+    if fragment_attr then
+      fragment_class = " fragment " .. (fragment_attr == "true" and "fade-in-then-semi-out" or fragment_attr)
+    end
 
-    -- Create the opening HTML (RawBlock)
+    -- NEW: Fragment Index logic
+    local index_attr = el.attributes["index"]
+    local index_data = ""
+    if index_attr then
+      -- In Reveal.js, we use the data-fragment-index attribute
+      index_data = string.format(' data-fragment-index="%s"', index_attr)
+    end
+
+    -- Build opening HTML with the new index_data
     local html_open = pandoc.RawBlock("html", string.format(
-      '<div class="value-box %s" style="width:%s; text-align:%s;">%s%s%s<div class="details">',
-      color, width, align, icon_html, title_html, value_html
+      '<div class="value-box %s%s" style="width:%s; text-align:%s;"%s><div class="details">',
+      color, fragment_class, width, align, index_data
     ))
 
-    -- Create the closing HTML (RawBlock)
+    -- (The rest remains the same)
     local html_close = pandoc.RawBlock("html", '</div></div>')
-
-    -- Sandwich the original Markdown content between our new HTML tags
-    local result = pandoc.List()
-    result:insert(html_open)
+    local result = pandoc.List({html_open})
     result:extend(el.content)
     result:insert(html_close)
-
     return result
   end
 end
