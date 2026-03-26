@@ -52,11 +52,14 @@ revealjs-plugins:
   - verticator
   - fullscreen
   - pointer
+  - codefocus
 filters:
   - stlite # modified stlite extension
   - reveal-header
   - bergam0t/value-box
   - bergam0t/focus-list
+  - code-fullscreen
+
 ---
 
 # Section Header Example
