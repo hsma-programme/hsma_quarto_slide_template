@@ -55,6 +55,7 @@ revealjs-plugins:
 filters:
   - stlite # modified stlite extension
   - reveal-header
+  - bergam0t/value-box
 ---
 
 # Section Header Example
@@ -192,4 +193,13 @@ There are some speaker notes on this slide - but you can't see them unless you'r
 
 :::{.notes}
 Aha! I'm secret notes.
+
+## Icon boxes
+
+::: {.value-box icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center"}
+And here's a more advanced type of box with an icon
+:::
+
+::: {.value-box value="Big text" icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center"}
+And here's a more advanced type of box with an icon and a value
 :::
