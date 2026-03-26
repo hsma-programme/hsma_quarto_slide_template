@@ -7,7 +7,7 @@ execute:
   eval: false # Don't run code by default
   echo: true # Display code cells by default
 format:
-  revealjs:
+  live-revealjs:
     embed-resources: false # necessary for stlite-quarto and chalkboard to work
     # embed-resources: true # comment in/out as appropriate
     chalkboard: true
@@ -339,7 +339,6 @@ Using reunings code focus extension, we can highlight different parts of a code 
 #| eval: false
 answer = "42"
 question = "What is the answer to life, the universe, and everything?"
-
 print(f"Question: '{question}'\n Answer: '{answer}'")
 ```
 
@@ -350,3 +349,14 @@ When this fragment is shown, the first line of code will have the `focus` class 
 ::: {.fragment .current-only data-code-focus="3"}
 Then this line when we move through
 :::
+
+## Live code example
+
+```{pyodide}
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.normal(170, 10, 250)
+plt.hist(x)
+plt.show()
+```
