@@ -271,3 +271,54 @@ iframe.stlite {
     width: 60%;
   }
 }
+
+/* 1. Reset list to be stable */
+.reveal .focus-list ul,
+.reveal .focus-list ol {
+  list-style-type: none !important;
+  padding-left: 1em !important;
+  position: relative;
+}
+
+/* 2. The Fragment Container */
+.reveal .focus-list .fragment {
+  display: block;
+  width: 100%;
+  visibility: hidden;
+  opacity: 1 !important;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.reveal .focus-list .fragment.visible {
+  visibility: visible;
+}
+
+/* 3. The Bullet */
+.reveal .focus-list .fragment::before {
+  content: "•";
+  position: absolute;
+  left: -0.8em;
+  color: inherit;
+}
+
+/* 4. THE DARK THEME FIX: Light Alpha Dimming */
+.reveal .focus-list .fragment.visible {
+  /* Use a transparent white so it sits 'on top' of the dark bg */
+  color: rgba(255, 255, 255, 0.3) !important;
+  /*font-weight: 400;*/
+}
+
+/* 5. Highlight the Current Item */
+.reveal .focus-list .fragment.current-fragment {
+  color: #ffffff !important; /* A bright, 'Neon' blue looks great on dark themes */
+  /*font-weight: 700;*/
+  /* Optional: adds a glow to the active line */
+  /*text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);*/
+}
+
+/* 6. Keep Parents Bright */
+.reveal .focus-list .fragment.current-fragment-ancestor {
+  color: rgba(255, 255, 255, 0.85) !important;
+  /*font-weight: 600;*/
+}
