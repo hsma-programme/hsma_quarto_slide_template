@@ -156,16 +156,41 @@ iframe.stlite {
 
 
 // Slides with no grey box
-.reveal .slides section.no-box,
-.reveal .slides > section.no-box,
-.reveal .slides > section.stack > section.no-box {
+// .reveal .slides section.no-box,
+// .reveal .slides > section.no-box,
+// .reveal .slides > section.stack > section.no-box {
+//   background-color: transparent !important;
+//   border-radius: 0 !important;
+//   box-shadow: none !important;
+// }
+
+// Slides with no grey box
+.reveal .slides > section.stack:has(> section.no-box) {
   background-color: transparent !important;
   border-radius: 0 !important;
   box-shadow: none !important;
 }
 
+.reveal .slides > section.stack:has(> section.no-box) > section:not(.no-box) {
+  background-color: rgba(56, 56, 56, 0.8) !important;
+  border-radius: 12px !important;
+  box-sizing: border-box !important;
+  padding: 20px !important;
+  padding-right: 60px !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
 
+// # header slide should be centred vertically
+.reveal .slides > section.stack:has(> section.no-box) > section:first-child {
+  justify-content: center !important;
+}
 
+// Complex value box
 .value-box {
   display: flex;
   flex-direction: column;
