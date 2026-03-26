@@ -24,17 +24,45 @@ function Div(el)
       index_data = string.format(' data-fragment-index="%s"', index_attr)
     end
 
-    -- Build opening HTML with the new index_data
-    local html_open = pandoc.RawBlock("html", string.format(
-      '<div class="value-box %s%s" style="width:%s; text-align:%s;"%s><div class="details">',
+-- Build opening HTML with the new index_data
+    local html_open = string.format(
+      '<div class="value-box %s%s" style="width:%s; text-align:%s;"%s>',
       color, fragment_class, width, align, index_data
-    ))
+    )
 
-    -- (The rest remains the same)
-    local html_close = pandoc.RawBlock("html", '</div></div>')
-    local result = pandoc.List({html_open})
+    -- ADD ICON (if it exists)
+    if icon ~= "" then
+      html_open = html_open .. string.format('<i class="icon %s"></i>', icon)
+    end
+
+    -- ADD VALUE (if it exists)
+    if value ~= "" then
+      html_open = html_open .. string.format('<div class="value">%s</div>', value)
+    end
+
+    -- Open the details wrapper for the inner text
+-- Build the full HTML string
+    local html_open = string.format(
+      '<div class="value-box %s%s" style="width:%s; text-align:%s;"%s>',
+      color, fragment_class, width, align, index_data
+    )
+
+    if icon ~= "" then
+      html_open = html_open .. string.format('<i class="icon bi %s"></i>', icon)
+    end
+
+    if value ~= "" then
+      html_open = html_open .. string.format('<div class="value">%s</div>', value)
+    end
+
+    html_open = html_open .. '<div class="details">'
+    local html_close = '</div></div>'
+
+    -- THE CRITICAL CHANGE: Use el.content instead of el
+    local result = pandoc.List({pandoc.RawBlock("html", html_open)})
     result:extend(el.content)
-    result:insert(html_close)
+    result:insert(pandoc.RawBlock("html", html_close))
+
     return result
   end
 end
