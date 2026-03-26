@@ -6,6 +6,12 @@ $link-color: #42affa;
 
 /*-- scss:rules --*/
 
+.reveal .backgrounds {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
 .reveal .slide blockquote {
   border-left: 3px solid $text-muted;
   padding-left: 0.5em;
@@ -21,15 +27,15 @@ $link-color: #42affa;
   line-height: 0.9em;
   letter-spacing: 0.02em;
   text-shadow: none;
- }
+}
 
- .reveal h1 {
-   margin: 0px 20px 20px 20px;
-   color: #ffffff;
-   line-height: 0.9em;
-   letter-spacing: 0.02em;
-   text-shadow: -1px -1px 4px black;
-  }
+.reveal h1 {
+  margin: 0px 20px 20px 20px;
+  color: #ffffff;
+  line-height: 0.9em;
+  letter-spacing: 0.02em;
+  text-shadow: -1px -1px 4px black;
+}
 
 p {
     margin: 0px 20px 20px 20px !important;
@@ -52,58 +58,185 @@ body {
     filter: brightness(10) saturate(0);
 }
 
-// /* Style top-level slide sections */
-// .reveal .slides > section {
-//   background-color: rgba(56, 56, 56, 0.7);
-//   max-width: 100%; /* Prevent accidental overflow */
-//   margin: 20px auto;
-//   padding: 1em 0.5em 1.5em 0.5em; /* top, right, bottom, left */
-//   border-radius: 12px;
-//   box-sizing: border-box;
-//   color: white;
-//   display: block;
-//   word-wrap: break-word;
-//   overflow-wrap: break-word;
-// }
-
-// Create a grey box
-/* Remove extra padding from the slides container */
+// Create a grey box using a pseudo-element (doesn't interfere with bg)
 .reveal .slides {
   padding: 0 !important;
-  /* Style top-level slide sections */
-  background-color: rgba(56, 56, 56, 0.7);
-  margin: 0px 20px 20px 20px;
-  padding: 0px 20px 0px 20px; /* top, right, bottom, left */
   border-radius: 12px;
   box-sizing: border-box;
-  display: block;
   word-wrap: break-word;
   overflow-wrap: break-word;
-
-  /* Overspill effect */
-  transform: scaleX(1.1); /* 10% wider */
+  transform: scaleX(1.1);
   transform-origin: center;
+
+  /* Remove the background from here */
+  background-color: transparent;
 }
 
-/* Nested slide sections (if any) — remove padding but keep content */
-.reveal .slides section > section {
-  background: none;
-  padding: 10px 20px 20px 20px;
-  margin: 0;
-  border: none;
+// Default: content starts at the top for regular slides
+.reveal .slides > section {
+  /* background-color: rgba(56, 56, 56, 0.8); */
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+  /* min-height: 85vh; */
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.sourceCode {
-  width: 95% !important;
-  max-width: 95% !important;
+// Title slide — target by id
+.reveal .slides > section#title-slide {
+  background-color: rgba(56, 56, 56, 0.8);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.cell-output {
-  width: 95% !important;
-  max-width: 95% !important;
+// Restore alignment for title slide children
+.reveal .slides > section#title-slide h1,
+.reveal .slides > section#title-slide .quarto-title-authors,
+.reveal .slides > section#title-slide .quarto-title-author,
+.reveal .slides > section#title-slide .quarto-title-author-name,
+.reveal .slides > section#title-slide p {
+  text-align: center;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
+
+// Grey box only on the stack wrapper (content slides)
+.reveal .slides > section.stack {
+  background-color: rgba(56, 56, 56, 0.8);
+  border-radius: 12px;
+}
+
+// Limit the width of the elements within the slides so they don't come too close to
+// the edge of the grey background box (or overhang)
+// .sourceCode {
+//   width: 95% !important;
+//   max-width: 95% !important;
+// }
+
+// .cell-output {
+//   width: 95% !important;
+//   max-width: 95% !important;
+// }
+
+.reveal .slides > section.stack > section.slide {
+  box-sizing: border-box;
+  /*  width: 100% !important; */
+  padding-right: 60px !important;
+}
+
+
 
 iframe.stlite {
     width: 1px;
     min-width: 95% !important;
+}
+
+
+.value-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  row-gap: 1.5rem;
+}
+
+/* Collapse to a single column on small screens */
+@media (max-width: 600px) {
+  .value-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+// Slides with no grey box
+.reveal .slides section.no-box,
+.reveal .slides > section.no-box,
+.reveal .slides > section.stack > section.no-box {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+
+
+.value-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  color: white;
+  min-height: 100px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+  text-decoration: none;   /* remove underline on the whole card */
+  margin-bottom: 1.5rem;   /* ← spacing when used outside the grid */
+}
+
+.value-box .icon {
+  font-size: 4.5rem;
+  line-height: 1;
+  margin-bottom: 0.6rem;
+  color: white;
+}
+
+.value-box .title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.value-box .value {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 0.2rem 0;
+}
+
+.value-box .details {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  line-height: 1.3;
+}
+
+.value-box-simple {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  color: white;
+  min-height: 50px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+  text-decoration: none;   /* remove underline on the whole card */
+  margin-bottom: 1.5rem;   /* ← spacing when used outside the grid */
+
+}
+
+.bg-amber { background-color:rgb(211, 123, 0) ; }
+
+.bg-light-grey { background-color:rgb(197, 197, 197) ; }
+
+.bg-light-blue { background-color:rgb(106, 189, 192) ; }
+
+
+.centred-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  gap: 1rem;
+  width: 100%;
+
+  .fragment {
+    width: 60%;
+  }
 }

@@ -21,6 +21,9 @@ format:
     transition: fade
     plotly-connected: true
     background-transition: fade
+    mermaid:
+      theme: neutral
+      format: svg
     menu:
         numbers: true
     preload-iframes: true
@@ -32,9 +35,6 @@ format:
     theme: [default, custom.scss]
     title-slide-attributes:
         data-background-image: assets/banner.png
-    include-in-header:
-      - text: |
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
     verticator:
       themetag: 'h1'
       color: ''
@@ -46,10 +46,12 @@ format:
       autogenerate: true
       tooltip: false
       scale: 1
-    revealjs-plugins:
-      - verticator
-      - fullscreen
-      - pointer
+    include-in-header:
+      file: resources/header.html
+revealjs-plugins:
+  - verticator
+  - fullscreen
+  - pointer
 filters:
   - stlite # modified stlite extension
   - reveal-header
