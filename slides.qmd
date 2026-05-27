@@ -48,11 +48,18 @@ format:
       scale: 1
     include-in-header:
       file: resources/header.html
+    revealjs-a11y:
+      high-contrast: false
+      alt-text-warnings: true
+      slide-change-cue:
+        visual: false
+        audio: false
 revealjs-plugins:
   - verticator
   - fullscreen
   - pointer
   - codefocus
+  - a11y
 filters:
   - stlite # modified stlite extension
   - reveal-header
@@ -189,7 +196,7 @@ Then this will appear when you're ready.
 
 ## Simple boxes 1
 
-::: {.value-box-simple .bg-amber style="font-size: 1.25rem;"}
+::: {.value-box .bg-amber style="font-size: 1.25rem;"}
 
 **Value boxes**
 
@@ -242,7 +249,7 @@ This only works on second level slides - not # level slides.
 
 ::: {.fragment .fade-in-then-semi-out}
 
-::: {.value-box-simple .bg-light-blue style="font-size: 1.25rem;"}
+::: {.value-box .bg-light-blue style="font-size: 1.25rem;"}
 
 **Value boxes**
 
@@ -254,7 +261,7 @@ A simple value box can help convey points, especially when combined with fragmen
 
 ::: {.fragment}
 
-::: {.value-box-simple .bg-amber style="font-size: 1.25rem;"}
+::: {.value-box .bg-amber style="font-size: 1.25rem;"}
 
 **Value boxes**
 
