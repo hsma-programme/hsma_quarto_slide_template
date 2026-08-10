@@ -1,5 +1,6 @@
 /.quarto/
 *.pyc
+/.venv/
 
 /.luarc.json
 

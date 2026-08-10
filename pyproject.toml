@@ -1,0 +1,11 @@
+[project]
+name = "hsma-quarto-slide-template"
+version = "0.1.0"
+description = "HSMA Quarto slide template"
+requires-python = ">=3.9"
+dependencies = [
+    "jupyter",
+    "nbconvert",
+    "nbformat",
+    "pyyaml",
+]
