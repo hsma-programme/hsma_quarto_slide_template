@@ -1,13 +1,28 @@
 ---
 title: "Title"
+subtitle: "Subtitle goes here"
 author:
     name: Dr Dan Chalk, Sammi Rosser
     affiliation: Health Service Modelling Associates Programme
+tagline: "SimPy the Best"
+partner-logo: "assets/hsma_logo.png"
+partner-logo-alt: "HSMA logo"
+title-image:
+  image: "assets/hsma_logo.png"
+  alt: "HSMA logo"
+title-media-a:
+  image: "assets/hsma_logo.png"
+  alt: "HSMA logo"
+title-media:
+  - image: "assets/hsma_logo.png"
+    alt: "HSMA logo"
+  - image: "assets/hsma_logo.png"
+    alt: "HSMA logo"
 execute:
   eval: false # Don't run code by default
   echo: true # Display code cells by default
 format:
-  revealjs:
+  live-revealjs:
     embed-resources: false # necessary for stlite-quarto and chalkboard to work
     # embed-resources: true # comment in/out as appropriate
     chalkboard: true
@@ -21,6 +36,9 @@ format:
     transition: fade
     plotly-connected: true
     background-transition: fade
+    mermaid:
+      theme: neutral
+      format: svg
     menu:
         numbers: true
     preload-iframes: true
@@ -29,12 +47,11 @@ format:
     # background-image: "assets/hsma_bg_1.png"
     background-image: "assets/banner_hq.png"
     # background-size: cover
-    theme: [default, custom.scss]
+    theme: [default, custom.scss, title-slide.scss]
+    template-partials:
+      - title-slide.html
     title-slide-attributes:
         data-background-image: assets/banner.png
-    include-in-header:
-      - text: |
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
     verticator:
       themetag: 'h1'
       color: ''
@@ -46,13 +63,27 @@ format:
       autogenerate: true
       tooltip: false
       scale: 1
-    revealjs-plugins:
-      - verticator
-      - fullscreen
-      - pointer
+    include-in-header:
+      file: resources/header.html
+    revealjs-a11y:
+      high-contrast: false
+      alt-text-warnings: true
+      slide-change-cue:
+        visual: false
+        audio: false
+revealjs-plugins:
+  - verticator
+  - fullscreen
+  - pointer
+  - codefocus
+  - a11y
 filters:
   - stlite # modified stlite extension
   - reveal-header
+  - bergam0t/value-box
+  - bergam0t/focus-list
+  - code-fullscreen
+
 ---
 
 # Section Header Example
@@ -180,6 +211,37 @@ Then this will appear when you're ready.
 
 :::
 
+## Simple boxes 1
+
+::: {.value-box .bg-amber style="font-size: 1.25rem;"}
+
+**Value boxes**
+
+A simple value box can help convey points, especially when combined with fragments.
+
+:::
+
+## Complex icon box layouts with index parameter
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Left Column
+::: {.value-box fragment="true" index="2"}
+This appears SECOND (Index 2)
+:::
+:::
+
+::: {.column width="50%"}
+### Right Column
+::: {.value-box fragment="true" index="1"}
+This appears FIRST (Index 1)
+:::
+:::
+
+::::
+
+
 
 
 # Other features
@@ -191,3 +253,175 @@ There are some speaker notes on this slide - but you can't see them unless you'r
 :::{.notes}
 Aha! I'm secret notes.
 :::
+
+
+## No box {.no-box}
+
+Use the {.no-box} syntax next to your slide title to remove the background grey box.
+
+This only works on second level slides - not # level slides.
+
+
+## Simple boxes 2
+
+::: {.fragment .fade-in-then-semi-out}
+
+::: {.value-box .bg-light-blue style="font-size: 1.25rem;"}
+
+**Value boxes**
+
+A simple value box can help convey points, especially when combined with fragments.
+
+:::
+
+:::
+
+::: {.fragment}
+
+::: {.value-box .bg-amber style="font-size: 1.25rem;"}
+
+**Value boxes**
+
+Like this!
+
+:::
+
+
+:::
+
+
+
+
+## Icon boxes
+
+::: {.value-box icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center"}
+And here's a more advanced type of box with an icon
+:::
+
+::: {.value-box value="Big text" icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center" fragment="fade-in-then-out"}
+And here's a more advanced type of box with an icon and a value
+:::
+
+::: {.value-box fragment="strike" width="60%" align="center"}
+And one without an icon
+:::
+
+
+## Complex icon box layouts with index parameter
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Left Column
+::: {.value-box fragment="true" index="2"}
+This appears SECOND (Index 2)
+:::
+:::
+
+::: {.column width="50%"}
+### Right Column
+::: {.value-box fragment="true" index="1"}
+This appears FIRST (Index 1)
+:::
+:::
+
+::::
+
+
+## Fade-in-then-out-lists
+
+You can use the {.focus-list} div to auto fade in and out as you move through a list
+
+::: {.focus-list}
+* First important point
+* Second important point (previous one dims!)
+* Third important point
+:::
+
+
+## Fade-in-then-out-lists
+
+This works with indented lists too
+
+::: {.focus-list}
+* First important point
+  * And a sub-point on that matter
+* Second important point (previous one dims!)
+  * And a sub-point on that matter
+    * ... and a really nested point
+* Third important point
+:::
+
+
+
+
+## Code focus
+
+Using reunings code focus extension, we can highlight different parts of a code example.
+
+```{python}
+#| eval: false
+answer = "42"
+question = "What is the answer to life, the universe, and everything?"
+print(f"Question: '{question}'\n Answer: '{answer}'")
+```
+
+::: {.fragment .current-only data-code-focus="1"}
+When this fragment is shown, the first line of code will have the `focus` class added to it and it gets highlighted.
+:::
+
+::: {.fragment .current-only data-code-focus="3"}
+Then this line when we move through
+:::
+
+## Live code example
+
+```{pyodide}
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.normal(170, 10, 250)
+plt.hist(x)
+plt.show()
+```
+
+## Custom title slide layout
+
+The title slide (the very first slide of the deck) is generated from the
+`title-slide.html` partial and styled by `title-slide.scss`. It is driven
+entirely by YAML frontmatter keys — see the top of this file for the values
+used to build this deck's title slide:
+
+- `title`, `subtitle` — the module/session text
+- `author` — as before; the author name is coloured via `$hsma-title-author-color`
+- `tagline` — short strapline, coloured via `$hsma-title-tagline-color`
+- `partner-logo` / `partner-logo-alt` — a logo shown on a white plate, top-right
+
+## Custom title slide layout (continued)
+
+- `title-image` — a small image/GIF (or `video:`) shown above the title text
+- `title-media-a` — a single image/video panel, top-left of the slide
+- `title-media` — a list of image/video panels, bottom-right of the slide
+
+Every key is optional. Leave all of them out and the title slide falls back
+to the original centred title/author layout.
+
+Each media slot accepts either `image:` (works for GIFs too) or `video:`
+(plus optional `poster:` and `autoplay: true`).
+
+## Custom Title Slide - Escape hatch
+
+If a deck needs a hand-built title slide instead of the generated one, add
+`data-visibility: hidden` to `title-slide-attributes` to hide the generated
+slide, then reuse the same styling on a normal slide with the `.hsma-title`
+class and the `.hsma-ts-*` slot classes shown below:
+
+```markdown
+::: {.hsma-title}
+
+::: {.hsma-ts-text}
+# My Custom Title
+:::
+
+:::
+```

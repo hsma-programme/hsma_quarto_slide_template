@@ -14,7 +14,33 @@ The output of `slides.qmd` is set to automatically be `docs/index.html`, so poin
 
 ## Notes
 
-After making any changes to the *custom.scss* file, close any quarto preview windows and/or terminals you have open, then start the preview from scratch. Updates will not be pulled through when saving the updated file or re-clicking on preview, even if the page appears to reload.
+After making any changes to the *custom.scss* file (or *title-slide.scss*), close any quarto preview windows and/or terminals you have open, then start the preview from scratch. Updates will not be pulled through when saving the updated file or re-clicking on preview, even if the page appears to reload.
+
+## Custom title slide
+
+The first slide of the deck is generated from `title-slide.html` (a Quarto/Pandoc
+`template-partials` file) and styled by `title-slide.scss`. It is driven entirely by YAML
+frontmatter keys at the top of `slides.qmd`:
+
+| Key | Purpose |
+|---|---|
+| `title`, `subtitle` | Module / session heading text |
+| `author` | As standard; the author name is coloured on the title slide |
+| `tagline` | Short strapline shown under the author name |
+| `partner-logo`, `partner-logo-alt` | Logo shown on a white plate, top-right |
+| `title-image` | Small image/GIF (or `video:`) shown above the title text |
+| `title-media-a` | A single image/video panel, top-left of the slide |
+| `title-media` | A list of image/video panels, bottom-right of the slide |
+
+Every key is optional — a deck that sets none of them gets the original plain centred
+title/author layout. Each media slot accepts `image:` (GIFs work fine) or `video:`, plus
+optional `poster:` and `autoplay: true`.
+
+If a deck needs a fully hand-built title slide, add `data-visibility: hidden` to
+`title-slide-attributes` to hide the generated one, then build your own slide using the
+`.hsma-title` class together with the `.hsma-ts-*` slot classes (`.hsma-ts-text`,
+`.hsma-ts-media-a`, `.hsma-ts-partner`, `.hsma-ts-title-image`, `.hsma-ts-media-row`) to reuse
+the same styling — see the "Custom title slide layout" slide in `slides.qmd` for an example.
 
 
 ## Installed extensions

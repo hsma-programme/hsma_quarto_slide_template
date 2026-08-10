@@ -1,0 +1,194 @@
+/*-- scss:defaults --*/
+
+$hsma-title-author-color: #7ac943 !default;
+$hsma-title-tagline-color: #ffe600 !default;
+$hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
+
+/*-- scss:rules --*/
+
+// Undo the generic title-slide / section treatment from custom.scss for this
+// specific slide so the banner artwork shows through unobstructed.
+//
+// Deliberately does NOT touch `display` or `position`: reveal.js toggles
+// visibility between slides via a non-`!important` `display: none` / `.present
+// { display: block }` pair, and relies on every top-level section being
+// `position: absolute` so off-screen (non-present) slides don't take up
+// document flow. Overriding either with `!important` here defeats that and
+// pushes every later slide down by this slide's own height.
+.reveal .slides > section.hsma-title-slide {
+  background-color: transparent;
+  padding: 0 !important;
+  text-align: left;
+  overflow: hidden;
+}
+
+.hsma-title-grid {
+  position: absolute;
+  inset: 0;
+  // custom.scss applies `transform: scaleX(1.1)` to .reveal .slides, which
+  // would stretch logos/media 10% horizontally - undo it on our own wrapper.
+  transform: scaleX(calc(1 / 1.1));
+  transform-origin: center;
+}
+
+.hsma-title-slide,
+.hsma-title {
+  .hsma-ts-slot {
+    position: absolute;
+  }
+
+  // Top-left media slot (e.g. an intro clip)
+  .hsma-ts-media-a {
+    top: 4%;
+    left: 4%;
+    width: 20%;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  }
+
+  // Funder / partner logo, top-right, on a white plate
+  .hsma-ts-partner {
+    top: 4%;
+    right: 4%;
+    background: #fff;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    line-height: 0;
+
+    img {
+      display: block;
+      max-height: 42px;
+      max-width: 220px;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  // Bottom-right row of small media panels
+  .hsma-ts-media-row {
+    bottom: 5%;
+    right: 4%;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .hsma-ts-media-item {
+    width: 140px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+
+    img,
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .hsma-ts-slot.hsma-ts-media-a img,
+  .hsma-ts-slot.hsma-ts-media-a video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  // Text block: module title / session subtitle / author / tagline
+  .hsma-ts-text {
+    position: absolute;
+    left: 4%;
+    bottom: 6%;
+    max-width: 56%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    background: $hsma-title-scrim;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
+
+    .hsma-ts-title-image {
+      width: 30%;
+      max-width: 160px;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+    }
+
+    h1.title {
+      margin: 0 0 0.25rem 0;
+      text-align: left;
+      width: auto;
+    }
+
+    p.subtitle {
+      margin: 0 0 0.5rem 0 !important;
+      text-align: left;
+      width: auto;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    .quarto-title-authors {
+      justify-content: flex-start;
+      margin: 0;
+    }
+
+    .quarto-title-author,
+    .quarto-title-author-name,
+    p {
+      text-align: left;
+      width: auto;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .quarto-title-author-name {
+      color: $hsma-title-author-color;
+      font-weight: 600;
+    }
+
+    p.hsma-ts-tagline {
+      margin: 0.25rem 0 0 0 !important;
+      color: $hsma-title-tagline-color;
+      font-weight: 700;
+      text-align: left;
+      width: auto;
+    }
+
+    p.date {
+      margin: 0.25rem 0 0 0 !important;
+      opacity: 0.8;
+      text-align: left;
+      width: auto;
+    }
+  }
+}
+
+// Fallback: when none of the extra slots are used, centre the text block
+// like the original stock title slide so plain decks are unaffected.
+.hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-media-row, .hsma-ts-title-image)) {
+  .hsma-ts-text {
+    position: static;
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    background: rgba(56, 56, 56, 0.8);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+
+    h1.title,
+    p.subtitle,
+    .quarto-title-authors,
+    .quarto-title-author,
+    .quarto-title-author-name,
+    p {
+      text-align: center;
+      width: 100%;
+    }
+  }
+}

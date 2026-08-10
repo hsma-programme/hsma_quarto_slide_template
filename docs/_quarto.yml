@@ -1,6 +1,8 @@
 project:
   title: "Title"
   output-dir: docs
+  resources:
+    - assets/
 
 format:
   revealjs:
