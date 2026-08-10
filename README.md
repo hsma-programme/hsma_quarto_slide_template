@@ -12,6 +12,36 @@ The output of `slides.qmd` is set to automatically be `docs/index.html`, so poin
 
 ![](assets/2025-06-25-16-29-01.png)
 
+## Setting up the Python environment
+
+The deck executes Python code cells, so Quarto needs a Python environment with Jupyter available. Dependencies are declared in `pyproject.toml` and pinned in `uv.lock`, managed with [uv](https://docs.astral.sh/uv/).
+
+```bash
+uv sync
+```
+
+That creates a `.venv` in the project folder with everything needed: the Jupyter stack that executes the code cells, `pyyaml` for the docs cleanup hook, and `plotly`/`pandas` for the example cells that actually run at render time. Then render with:
+
+```bash
+uv run quarto render
+```
+
+### If the render can't find your packages
+
+Quarto picks its own Python interpreter, and if it picks the wrong one you'll get errors like `ModuleNotFoundError: No module named 'nbformat'` or a plotly complaint about missing numpy/pandas — even though `uv sync` installed them. Two causes worth knowing:
+
+- **A different environment is already active.** If you have a conda env or another venv activated, `VIRTUAL_ENV` points at it and Quarto will use that instead of `.venv`. `uv` warns about this (`does not match the project environment path .venv`). Deactivate it, or open a fresh terminal, before rendering.
+- **Quarto isn't finding `.venv` at all.** Point it at the interpreter explicitly:
+
+  ```bash
+  export QUARTO_PYTHON="$PWD/.venv/Scripts/python.exe"   # Windows
+  export QUARTO_PYTHON="$PWD/.venv/bin/python"           # macOS / Linux
+  ```
+
+Rendering from VS Code's Quarto preview generally picks up the project `.venv` on its own.
+
+Note that only `{python}` cells marked `eval: true` run at render time. Code in `{pyodide}` and `{stlite-python}` cells (matplotlib, numpy, streamlit) runs in the reader's browser, so those packages don't need to be installed locally.
+
 ## Notes
 
 After making any changes to the *custom.scss* file (or *title-slide.scss*), close any quarto preview windows and/or terminals you have open, then start the preview from scratch. Updates will not be pulled through when saving the updated file or re-clicking on preview, even if the page appears to reload.

@@ -8,4 +8,10 @@ dependencies = [
     "nbconvert",
     "nbformat",
     "pyyaml",
+    # Needed at render time by the executed ({python}, eval: true) example
+    # cells. plotly.express additionally needs numpy (via the [express]
+    # extra) and pandas. Code in {pyodide} and {stlite-python} cells runs in
+    # the browser, so those imports (matplotlib, streamlit) aren't needed here.
+    "plotly[express]",
+    "pandas",
 ]
