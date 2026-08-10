@@ -1,8 +1,23 @@
 ---
 title: "Title"
+subtitle: "Subtitle goes here"
 author:
     name: Dr Dan Chalk, Sammi Rosser
     affiliation: Health Service Modelling Associates Programme
+tagline: "SimPy the Best"
+partner-logo: "assets/hsma_logo.png"
+partner-logo-alt: "HSMA logo"
+title-image:
+  image: "assets/hsma_logo.png"
+  alt: "HSMA logo"
+title-media-a:
+  image: "assets/hsma_logo.png"
+  alt: "HSMA logo"
+title-media:
+  - image: "assets/hsma_logo.png"
+    alt: "HSMA logo"
+  - image: "assets/hsma_logo.png"
+    alt: "HSMA logo"
 execute:
   eval: false # Don't run code by default
   echo: true # Display code cells by default
@@ -32,7 +47,9 @@ format:
     # background-image: "assets/hsma_bg_1.png"
     background-image: "assets/banner_hq.png"
     # background-size: cover
-    theme: [default, custom.scss]
+    theme: [default, custom.scss, title-slide.scss]
+    template-partials:
+      - title-slide.html
     title-slide-attributes:
         data-background-image: assets/banner.png
     verticator:
@@ -366,4 +383,45 @@ import numpy as np
 x = np.random.normal(170, 10, 250)
 plt.hist(x)
 plt.show()
+```
+
+## Custom title slide layout
+
+The title slide (the very first slide of the deck) is generated from the
+`title-slide.html` partial and styled by `title-slide.scss`. It is driven
+entirely by YAML frontmatter keys — see the top of this file for the values
+used to build this deck's title slide:
+
+- `title`, `subtitle` — the module/session text
+- `author` — as before; the author name is coloured via `$hsma-title-author-color`
+- `tagline` — short strapline, coloured via `$hsma-title-tagline-color`
+- `partner-logo` / `partner-logo-alt` — a logo shown on a white plate, top-right
+
+## Custom title slide layout (continued)
+
+- `title-image` — a small image/GIF (or `video:`) shown above the title text
+- `title-media-a` — a single image/video panel, top-left of the slide
+- `title-media` — a list of image/video panels, bottom-right of the slide
+
+Every key is optional. Leave all of them out and the title slide falls back
+to the original centred title/author layout.
+
+Each media slot accepts either `image:` (works for GIFs too) or `video:`
+(plus optional `poster:` and `autoplay: true`).
+
+## Custom Title Slide - Escape hatch
+
+If a deck needs a hand-built title slide instead of the generated one, add
+`data-visibility: hidden` to `title-slide-attributes` to hide the generated
+slide, then reuse the same styling on a normal slide with the `.hsma-title`
+class and the `.hsma-ts-*` slot classes shown below:
+
+```markdown
+::: {.hsma-title}
+
+::: {.hsma-ts-text}
+# My Custom Title
+:::
+
+:::
 ```

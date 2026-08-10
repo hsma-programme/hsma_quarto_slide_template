@@ -1,8 +1,21 @@
 /.quarto/
 *.pyc
+/.venv/
 
 /.luarc.json
 
 **/*.quarto_ipynb
 
+# Jupyter engine intermediates. The rule above does not match the numbered
+# variants (slides.quarto_ipynb_1, _2, ...) that Quarto leaves behind.
+**/*.quarto_ipynb_*
+
 _quarto_internal_scss_error.scss
+
+# The freeze cache is a local build artefact -- it is rebuilt on render.
+/_freeze/
+/docs/_freeze/
+
+# NOTE: do NOT add `docs/` here. It is the GitHub Pages source and must stay
+# committable, otherwise every render's new content-hashed filenames get
+# skipped by `git add -A` and you need `git add -f` forever.
