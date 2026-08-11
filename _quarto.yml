@@ -28,6 +28,8 @@ docs-keep:
   - index.html
   - slides_files
   - assets
+  - resources
+  - diagrams
   - .nojekyll
   - _extensions
   - _freeze
@@ -35,9 +37,11 @@ docs-keep:
   - title-slide.scss
   - title-slide.html
   - _brand.yml
-  - resources
   - code_examples
   - fullscreen
+  - sections
+  - sample_code
+
 
 format:
   revealjs:

@@ -1,0 +1,11 @@
+{
+    "files.readonlyInclude": {
+        "docs/**": true
+    },
+    // "files.exclude": {
+    //     "docs/sections": true
+    // },
+    // "search.exclude": {
+    //     "docs/sections": true
+    // }
+}
