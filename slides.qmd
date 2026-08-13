@@ -23,6 +23,7 @@ execute:
   echo: true # Display code cells by default
 format:
   live-revealjs:
+    pagetitle: "HSMA Session"
     embed-resources: false # necessary for stlite-quarto and chalkboard to work
     # embed-resources: true # comment in/out as appropriate
     chalkboard: true
@@ -77,13 +78,14 @@ revealjs-plugins:
   - pointer
   - codefocus
   - a11y
+  - tabset
+  - codewindow
 filters:
   - stlite # modified stlite extension
   - reveal-header
   - bergam0t/value-box
   - bergam0t/focus-list
   - code-fullscreen
-
 ---
 
 # Section Header Example

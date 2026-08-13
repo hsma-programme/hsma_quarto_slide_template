@@ -2,6 +2,7 @@
     "files.readonlyInclude": {
         "docs/**": true
     },
+    "python.defaultInterpreterPath": "c:\\HSMA\\hsma_quarto_slide_template\\.venv\\Scripts\\python.exe",
     // "files.exclude": {
     //     "docs/sections": true
     // },
