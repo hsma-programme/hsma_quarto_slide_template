@@ -342,3 +342,11 @@ iframe.stlite {
 .reveal div.sourceCode pre > code > span {
   box-sizing: border-box;
 }
+
+// live-runtime.css sets `div.cell-output-display canvas { background-color: #fff }`
+// so webR's base-R plots read on the dark theme. That also opacifies ipycytoscape's
+// (and any other ipywidgets canvas widget's) normally-transparent layers, hiding
+// their content. This selector is more specific, so it wins regardless of load order.
+.reveal div.cell-output-display .custom-widget canvas {
+  background-color: transparent;
+}
