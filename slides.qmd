@@ -67,7 +67,8 @@ format:
     include-in-header:
       file: resources/header.html
     include-after-body:
-      file: resources/cytoscape-widget-fix.html
+      - file: resources/cytoscape-widget-fix.html
+      - file: resources/plotly-animation-gate.html # plays Plotly animations on the current slide only
     revealjs-a11y:
       high-contrast: false
       alt-text-warnings: true
