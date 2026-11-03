@@ -1,0 +1,26 @@
+<script>
+(function () {
+  function fixVisibleCytoscapeWidgets() {
+    document
+      .querySelectorAll(".reveal .slides section.present .custom-widget")
+      .forEach(function (el) {
+        var cy = el._cyreg && el._cyreg.cy;
+        if (cy) {
+          cy.resize();
+          cy.fit(undefined, 30);
+        }
+      });
+  }
+  function whenRevealReady(callback) {
+    if (window.Reveal && typeof window.Reveal.on === "function") {
+      callback(window.Reveal);
+    } else {
+      setTimeout(function () { whenRevealReady(callback); }, 50);
+    }
+  }
+  whenRevealReady(function (Reveal) {
+    Reveal.on("ready", fixVisibleCytoscapeWidgets);
+    Reveal.on("slidechanged", fixVisibleCytoscapeWidgets);
+  });
+})();
+</script>

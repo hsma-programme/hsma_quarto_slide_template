@@ -37,6 +37,19 @@ $link-color: #42affa;
   text-shadow: -1px -1px 4px black;
 }
 
+.reveal h2 {
+  font-size:1.3em;
+}
+
+.reveal p {
+  font-size:0.85em;
+}
+
+.value-box p {
+  font-size:1.4em;
+}
+
+
 p {
     margin: 0px 20px 20px 20px !important;
 }
@@ -266,3 +279,91 @@ iframe.stlite {
 //   color: rgba(255, 255, 255, 0.85) !important;
 //   /*font-weight: 600;*/
 // }
+
+.reveal {
+  --codewindow-bg: #1e293b;
+  --codewindow-header-bg: #0f172a;
+  --codewindow-tab-bg: #334155;
+  --codewindow-color: #e2e8f0;
+}
+// codewindow builds its window chrome (traffic lights + file tab) as a bare
+// `div.header`, but the reveal-header extension unconditionally hides every
+// `div.header` on the page at init -- see
+// _extensions/shafayetShafee/reveal-header/resources/js/add_header.js, where it
+// suppresses the `::: {.header}` slide-body divs used to override per-slide
+// header text. It runs after codewindow, so it stamps an inline display:none on
+// the code window's title bar and the whole bar vanishes.
+// A scoped !important beats the inline style. Keep it scoped to
+// `.codewindow > .header` so genuine reveal-header override divs stay hidden.
+.reveal .codewindow > .header {
+  display: flex !important;
+}
+
+// codewindow sets `.codewindow { font-size: 0.45em }` and then forces the inner
+// pre / .sourceCode to `font-size: unset` so they inherit it, which lands code
+// at 0.45 * 40px root = 18px. Quarto's own revealjs default is
+// `.reveal pre { font-size: .55em }` = 22px, hence code windows reading ~18%
+// small. 0.55em matches Quarto exactly; drop to 0.5em (20px) for a gentler bump.
+// This scales the whole window, file tab and language icon included -- if the
+// 30px title bar feels cramped, raise --codewindow-header-height alongside it.
+.reveal .codewindow {
+  font-size: 0.50em;
+}
+
+// The file tab just inherits the window's font-size, so the filename renders at
+// the same size as the code. Scale it down relative to the window: 0.8em here
+// is 0.8 * 0.5 = 0.4em of the root, i.e. 16px against the code's 20px.
+// Covers the multi-tab layout (.header .tabs .file) as well as the single tab.
+// The language icon is sized `height: 1em`, so it shrinks in step and the tab
+// stays proportioned -- give the svg its own font-size if you want it to hold
+// its current size.
+.reveal .codewindow > .header .file {
+  font-size: 0.8em;
+}
+
+// .codewindow-dark doesn't redefine --codewindow-tab-active-bg, so the active
+// file tab falls back to the light value set on .reveal above while
+// --codewindow-color flips to near-white -- roughly 1.06:1 contrast, i.e. an
+// invisible file name. Give the dark preset a matching tab colour.
+.reveal .codewindow.codewindow-dark {
+  --codewindow-tab-active-bg: #1e293b;
+}
+
+// Stop code blocks growing a spurious horizontal scrollbar.
+// code-line-style turns each line into `display:inline-block; width:100%` with
+// `padding-left:.35em` and a 3px left border. This deck has no universal
+// `box-sizing:border-box`, so those add ON TOP of the 100% and every line ends
+// up ~3px wider than its container -- and both `div.sourceCode` and
+// `.reveal pre code` are `overflow:auto`, so that's enough to trigger a
+// scrollbar even on a two-line block. border-box folds the padding and border
+// back inside the 100%, so the line ends flush and nothing overflows.
+// (Quarto's `pre.numberSource code > span { left: -4em }` is a paint-time
+// relative offset and never contributed to scroll overflow -- only width did.)
+.reveal div.sourceCode pre > code > span {
+  box-sizing: border-box;
+}
+
+// live-runtime.css sets `div.cell-output-display canvas { background-color: #fff }`
+// so webR's base-R plots read on the dark theme. That also opacifies ipycytoscape's
+// (and any other ipywidgets canvas widget's) normally-transparent layers, hiding
+// their content. This selector is more specific, so it wins regardless of load order.
+.reveal div.cell-output-display .custom-widget canvas {
+  background-color: transparent;
+}
+
+// Same blanket rule, same failure shape, different widget: Plotly Express
+// auto-switches `px.line`/`px.scatter` to WebGL (`scattergl`) once a trace
+// has enough points (default threshold: >1000 rows in the input dataframe -
+// e.g. vidigi's TrialLogger.plot_queue_size on a multi-run, fine-grained
+// snapshot grid crosses this easily). A WebGL subplot stacks THREE canvases
+// per axis - `gl-canvas-context` (the actual rendered points/lines), then
+// `gl-canvas-focus` and `gl-canvas-pick` on top, both normally left
+// empty/transparent (focus repaints hover highlights, pick is an offscreen
+// hit-testing buffer never meant to be seen). The blanket white background
+// opacifies all three, so the two empty top layers permanently hide the
+// traces drawn on the layer underneath - legend, axis titles and hover
+// still work (SVG, and JS hit-testing reads the canvas's pixel buffer
+// directly, not its CSS), only the traces vanish.
+.reveal div.cell-output-display .plotly-graph-div canvas {
+  background-color: transparent;
+}
