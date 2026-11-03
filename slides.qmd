@@ -18,79 +18,39 @@ title-media:
     alt: "HSMA logo"
   - image: "assets/hsma_logo.png"
     alt: "HSMA logo"
-execute:
-  eval: false # Don't run code by default
-  echo: true # Display code cells by default
 format:
   live-revealjs:
     pagetitle: "HSMA Session"
-    embed-resources: false # necessary for stlite-quarto and chalkboard to work
-    # embed-resources: true # comment in/out as appropriate
-    chalkboard: true
     output-file: index.html # ensures picked up by github hosting
-    view-distance: 3 # only load slides near the current one, so GIFs/animations further on don't load (and play) too early
-    height: 800 # default height and width ensure consistent behaviour on different screens
-    width: 1250 # would recommend leaving this and height value as they are
-    preview-links: true
-    controls: false
-    controls-layout: edges
-    transition: fade
-    plotly-connected: true
-    background-transition: fade
-    mermaid:
-      theme: neutral
-      format: svg
-    menu:
-        numbers: true
-    preload-iframes: true
-    logo: "assets/hsma_logo.png"
-    footer-logo-link: "https://hsma.co.uk"
-    # background-image: "assets/hsma_bg_1.png"
-    background-image: "assets/banner_hq.png"
-    # background-size: cover
-    theme: [default, custom.scss, title-slide.scss]
-    template-partials:
-      - title-slide.html
-    title-slide-attributes:
-        data-background-image: assets/banner.png
-    verticator:
-      themetag: 'h1'
-      color: ''
-      inversecolor: ''
-      skipuncounted: false
-      clickable: true
-      position: 'auto'
-      offset: '3vmin'
-      autogenerate: true
-      tooltip: false
-      scale: 1
-    include-in-header:
-      file: resources/header.html
-    include-after-body:
-      - file: resources/cytoscape-widget-fix.html
-      - file: resources/plotly-animation-gate.html # plays Plotly animations on the current slide only
-    revealjs-a11y:
-      high-contrast: false
-      alt-text-warnings: true
-      slide-change-cue:
-        visual: false
-        audio: false
-revealjs-plugins:
-  - verticator
-  - fullscreen
-  - pointer
-  - codefocus
-  - a11y
-  - tabset
-  - codewindow
-filters:
-  - stlite # modified stlite extension
-  - reveal-header
-  - bergam0t/value-box
-  - bergam0t/focus-list
-  - code-fullscreen
-  - code-line-style
+# The output *directory* (docs/) is passed on the command line
+# (`quarto render --output-dir docs`, see README.md) -- not set here, and
+# not in _quarto.yml either. A per-document output-dir key looks like it
+# would let each deck publish to its own folder, but for this project type
+# Quarto ignores it silently. Setting it at the project level instead works
+# for rendering, but breaks `quarto preview` of a single ad-hoc file (see
+# _quarto.yml's comment). If you add a second deck, give it its own
+# _quarto-<name>.yml project profile (render + docs-keep, no output-dir) and
+# always render it with `quarto render --profile <name> --output-dir
+# docs_<name>` -- see the HSMA vidigi animations deck repo for a worked
+# example with two decks.
+# Shared format/execute/filters/plugins config (including theme,
+# template-partials and title-slide-attributes) lives in _metadata.yml --
+# Quarto merges it in automatically for every document in the project,
+# including sections rendered/previewed standalone. Keeping it out of here
+# avoids two copies of that config drifting apart.
 ---
+
+<!--
+This template demonstrates splitting a deck into root-level `_SECTION_*.qmd`
+files and pulling them in with `{{< include >}}`. Starting a new deck from
+this template? Follow the same pattern: put a section's slides in their own
+`_SECTION_<topic>.qmd` file (no front matter needed -- shared styling comes
+from `_metadata.yml`), then include it below in delivery order. See
+`_SECTION_example.qmd` and README.md for more.
+-->
+
+{{< include _SECTION_example.qmd >}}
+
 
 # Section Header Example
 
