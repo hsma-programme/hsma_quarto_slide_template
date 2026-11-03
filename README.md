@@ -115,11 +115,22 @@ frontmatter keys at the top of `slides.qmd`:
 | `title-media-a` | A single image/video panel, top-left of the slide. `bare: true` drops the shadow box (useful for transparent logos); `countdown:` adds a timer beside it — see below |
 | `title-video` | Video panel, bottom-right (shares that corner with `title-media` — use one or the other). `youtube:` (the video ID after `watch?v=`; unlisted videos work) or `video:` (a file), plus optional `autoplay: true`, `muted: true`, `loop: true`, `no-controls: true` (hides the player controls and ignores the mouse, so YouTube's hover overlay never appears — but you can't click to pause/unmute; for YouTube it also shows the video's thumbnail for the first ~3.5s on the slide, covering the title/buttons overlay YouTube always flashes when playback starts — the delay is in `title-slide.scss`) and `poster:` for files; or `image:`; or `placeholder: true` for an empty dashed box |
 | `title-media` | A list of image/video panels, bottom-right of the slide |
+| `qr-code`, `qr-code-caption` | QR code (right-hand side) to the hosted deck, with an optional caption underneath. `qr-code: auto` works out the URL; `qr-code: "https://..."` uses that URL — see below |
 | `title-audio` | `src:` (plus optional `loop: true`) — audio that starts each time the title slide is shown and stops when you navigate away |
 
 Every key is optional — a deck that sets none of them gets the original plain centred
 title/author layout. Each media slot accepts `image:` (GIFs work fine) or `video:`, plus
 optional `poster:` and `autoplay: true`.
+
+The QR code image, `assets/slides_qr.svg`, is regenerated before every render by
+`_make_slides_qr.py` (a `pre-render` hook in `_quarto.yml`) from the deck header's `qr-code:`.
+With `qr-code: auto`, a deck made from this template automatically points at its *own* GitHub
+Pages site: `https://<owner>.github.io/<repo>/`, worked out from the `origin` git remote, or the
+custom domain in `docs/CNAME`. If the deck is hosted somewhere else — e.g. you work from a
+personal fork but the organisation's copy is the published one — give the URL instead:
+`qr-code: "https://hsma-programme.github.io/my-deck/"`. The script needs the `segno` package (in
+`pyproject.toml`; `uv sync` installs it); without it the render still works but the QR code isn't
+updated.
 
 Setting `countdown:` on `title-media-a` (or on a splash logo) shows a countdown timer, in the
 HSMA Display font, to the right of that logo — handy for a "starting in…" or break timer.

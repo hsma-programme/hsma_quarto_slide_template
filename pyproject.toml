@@ -14,4 +14,6 @@ dependencies = [
     # the browser, so those imports (matplotlib, streamlit) aren't needed here.
     "plotly[express]",
     "pandas",
+    # Pre-render QR code for the title slide (_make_slides_qr.py)
+    "segno>=1.6.6",
 ]

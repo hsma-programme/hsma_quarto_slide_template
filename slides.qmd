@@ -2,7 +2,7 @@
 title: "Module Title"
 subtitle: "Session Title"
 author:
-    name: Dr Dan Chalk, Sammi Rosser
+    name: Session Lead, Coauthors
     affiliation: Health Service Modelling Associates Programme
 tagline: "SimPy the Best"
 splash:
@@ -27,6 +27,8 @@ title-video:
   muted: true
   loop: true
   no-controls: true # no player controls/hover overlay, no click-to-pause; YouTube shows its thumbnail for ~3.5s to hide its start-up overlay
+qr-code: "https://hsma-programme.github.io/hsma_quarto_slide_template/" # QR code to the hosted deck: `auto` (from the git remote) or a URL, e.g. "https://..."
+qr-code-caption: "Get the slides"
 title-audio:
   src: "https://github.com/hsma-programme/hsma_assets/raw/refs/heads/main/h6_theme.mp3"
   loop: false
@@ -396,6 +398,8 @@ used to build this deck's title slide:
 - `title-audio` — `src:` (and optional `loop: true`) for audio that starts when
   the title slide is shown and stops when you move off it
 - `partner-logo-plate` — `none` or `dark` for white logos that vanish on the white plate
+- `qr-code` — QR code to the hosted deck: `auto` works out the GitHub Pages URL, or give a URL
+  (optional `qr-code-caption:`)
 
 Every key is optional. Leave all of them out and the title slide falls back
 to the original centred title/author layout.

@@ -289,6 +289,37 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
     line-height: 1.2;
   }
 
+  // QR code for the hosted deck, right-hand side above the video, on a
+  // white plate (scanners need the light quiet zone around it)
+  .hsma-ts-qr {
+    top: 16%;
+    right: 4%;
+    width: 150px;
+    padding: 6px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    line-height: 0;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      margin: 0;
+    }
+
+    p {
+      margin: 4px 0 0 0 !important;
+      width: auto !important;
+      color: #000;
+      font-size: 16px;
+      line-height: 1.2;
+      text-align: center;
+    }
+  }
+
   // Bottom-right row of small media panels
   .hsma-ts-media-row {
     bottom: 5%;
@@ -404,7 +435,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
 // Fallback: when none of the extra slots are used, centre the text block
 // like the original stock title slide so plain decks are unaffected.
-.hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-video, .hsma-ts-media-row, .hsma-ts-title-image)) {
+.hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-video, .hsma-ts-qr, .hsma-ts-media-row, .hsma-ts-title-image)) {
   .hsma-ts-text {
     position: static;
     max-width: none;
