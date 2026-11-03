@@ -1,16 +1,26 @@
+$if(splash)$
+<section id="$idprefix$splash-slide" class="hsma-splash-slide" data-state="hsma-splash" data-menu-title="Welcome"$if(splash.background)$ data-background-image="$splash.background$"$else$$if(title-slide-attributes.data-background-image)$ data-background-image="$title-slide-attributes.data-background-image$"$endif$$endif$>
+<div class="hsma-splash-logos">
+$for(splash.logos)$
+<img src="$it.image$" alt="$if(it.alt)$$it.alt$$endif$"$if(it.position)$ class="hsma-splash-logo--$it.position$"$endif$$if(it.height)$ style="height: $it.height$;"$endif$>
+$endfor$
+</div>
+</section>
+$endif$
+
 <section id="$idprefix$title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$ class="quarto-title-block hsma-title-slide">
 <div class="hsma-title-grid">
 
 $if(title-media-a.video)$
-<video class="hsma-ts-slot hsma-ts-media-a" src="$title-media-a.video$"$if(title-media-a.poster)$ poster="$title-media-a.poster$"$endif$ muted loop playsinline controls$if(title-media-a.autoplay)$ autoplay$endif$></video>
+<video class="hsma-ts-slot hsma-ts-media-a$if(title-media-a.bare)$ hsma-ts-bare$endif$" src="$title-media-a.video$"$if(title-media-a.poster)$ poster="$title-media-a.poster$"$endif$ muted loop playsinline controls$if(title-media-a.autoplay)$ autoplay$endif$></video>
 $else$
 $if(title-media-a.image)$
-<img class="hsma-ts-slot hsma-ts-media-a" src="$title-media-a.image$" alt="$if(title-media-a.alt)$$title-media-a.alt$$endif$">
+<img class="hsma-ts-slot hsma-ts-media-a$if(title-media-a.bare)$ hsma-ts-bare$endif$" src="$title-media-a.image$" alt="$if(title-media-a.alt)$$title-media-a.alt$$endif$">
 $endif$
 $endif$
 
 $if(partner-logo)$
-<div class="hsma-ts-slot hsma-ts-partner">
+<div class="hsma-ts-slot hsma-ts-partner$if(partner-logo-plate)$ hsma-ts-partner--$partner-logo-plate$$endif$">
 <img src="$partner-logo$" alt="$if(partner-logo-alt)$$partner-logo-alt$$endif$">
 </div>
 $endif$
@@ -68,6 +78,23 @@ $endif$
 
 </div>
 
+$-- enablejsapi=1 must be in the src from the start: otherwise reveal.js
+$-- appends it after load, the embed reloads, and the player API sometimes
+$-- never comes up - so reveal can't play/pause it.
+$if(title-video)$
+<div class="hsma-ts-slot hsma-ts-video$if(title-video.no-controls)$ hsma-ts-no-controls$endif$"$if(title-video.youtube)$ style="background-image: url('https://i.ytimg.com/vi/$title-video.youtube$/hqdefault.jpg');"$endif$>
+$if(title-video.youtube)$
+<iframe src="https://www.youtube.com/embed/$title-video.youtube$?enablejsapi=1&rel=0&playsinline=1&iv_load_policy=3$if(title-video.no-controls)$&controls=0&disablekb=1&fs=0$endif$$if(title-video.muted)$&mute=1$endif$$if(title-video.loop)$&loop=1&playlist=$title-video.youtube$$endif$" title="$if(title-video.alt)$$title-video.alt$$else$Video$endif$" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"$if(title-video.autoplay)$ data-autoplay$endif$></iframe>
+$elseif(title-video.video)$
+<video src="$title-video.video$"$if(title-video.poster)$ poster="$title-video.poster$"$endif$ playsinline$if(title-video.no-controls)$$else$ controls$endif$$if(title-video.muted)$ muted$endif$$if(title-video.loop)$ loop$endif$$if(title-video.autoplay)$ data-autoplay$endif$></video>
+$elseif(title-video.image)$
+<img src="$title-video.image$" alt="$if(title-video.alt)$$title-video.alt$$endif$">
+$elseif(title-video.placeholder)$
+<div class="hsma-ts-video-placeholder">Video goes here</div>
+$endif$
+</div>
+$endif$
+
 $if(title-media)$
 <div class="hsma-ts-slot hsma-ts-media-row">
 $for(title-media)$
@@ -85,4 +112,8 @@ $endfor$
 $endif$
 
 </div>
+
+$if(title-audio.src)$
+<audio class="hsma-ts-audio" src="$title-audio.src$" preload="auto" data-autoplay$if(title-audio.loop)$ loop$endif$></audio>
+$endif$
 </section>

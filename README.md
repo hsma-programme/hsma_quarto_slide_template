@@ -108,19 +108,29 @@ frontmatter keys at the top of `slides.qmd`:
 | `title`, `subtitle` | Module / session heading text |
 | `author` | As standard; the author name is coloured on the title slide |
 | `tagline` | Short strapline shown under the author name |
+| `splash` | Adds a slide *before* the title slide showing only `logos` (a list of `image:`/`alt:`, each with an optional `position:` of `top-left`/`top-centre`/`top-right`/`bottom-left`/`bottom-centre`/`bottom-right` — omit to put it in a centred row — and optional `height:`, e.g. `"80px"`) over the banner. Uses the title slide's background unless `background:` is set |
 | `partner-logo`, `partner-logo-alt` | Logo shown on a white plate, top-right |
+| `partner-logo-plate` | `none` (no plate) or `dark` (dark scrim) — for white logos, which vanish on the default white plate |
 | `title-image` | Small image/GIF (or `video:`) shown above the title text |
-| `title-media-a` | A single image/video panel, top-left of the slide |
+| `title-media-a` | A single image/video panel, top-left of the slide. `bare: true` drops the shadow box (useful for transparent logos) |
+| `title-video` | Video panel, bottom-right (shares that corner with `title-media` — use one or the other). `youtube:` (the video ID after `watch?v=`; unlisted videos work) or `video:` (a file), plus optional `autoplay: true`, `muted: true`, `loop: true`, `no-controls: true` (hides the player controls and ignores the mouse, so YouTube's hover overlay never appears — but you can't click to pause/unmute; for YouTube it also shows the video's thumbnail for the first ~3.5s on the slide, covering the title/buttons overlay YouTube always flashes when playback starts — the delay is in `title-slide.scss`) and `poster:` for files; or `image:`; or `placeholder: true` for an empty dashed box |
 | `title-media` | A list of image/video panels, bottom-right of the slide |
+| `title-audio` | `src:` (plus optional `loop: true`) — audio that starts each time the title slide is shown and stops when you navigate away |
 
 Every key is optional — a deck that sets none of them gets the original plain centred
 title/author layout. Each media slot accepts `image:` (GIFs work fine) or `video:`, plus
 optional `poster:` and `autoplay: true`.
 
+`title-video` and `title-audio` start/stop with the slide (reveal.js `data-autoplay`):
+playback restarts from the beginning each time the title slide is shown and pauses as
+soon as you leave it (a YouTube video resumes where it paused rather than restarting). Browsers block sound until the viewer has interacted with the page,
+so audio plays reliably when you arrive on the title slide by advancing from the splash
+slide, but may stay silent if the page is loaded or refreshed directly on the title slide.
+
 If a deck needs a fully hand-built title slide, add `data-visibility: hidden` to
 `title-slide-attributes` to hide the generated one, then build your own slide using the
 `.hsma-title` class together with the `.hsma-ts-*` slot classes (`.hsma-ts-text`,
-`.hsma-ts-media-a`, `.hsma-ts-partner`, `.hsma-ts-title-image`, `.hsma-ts-media-row`) to reuse
+`.hsma-ts-media-a`, `.hsma-ts-partner`, `.hsma-ts-title-image`, `.hsma-ts-video`, `.hsma-ts-media-row`) to reuse
 the same styling — see the "Custom title slide layout" slide in `slides.qmd` for an example.
 
 

@@ -22,6 +22,74 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
   overflow: hidden;
 }
 
+// Splash slide shown before the title slide: just logos over the banner.
+.reveal .slides > section.hsma-splash-slide {
+  background-color: transparent;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.hsma-splash-logos {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8%;
+  transform: scaleX(calc(1 / 1.1)); // see .hsma-title-grid
+  transform-origin: center;
+
+  img {
+    height: 120px;
+    width: auto;
+    max-width: 42%;
+    object-fit: contain;
+    margin: 0;
+    // The logos are white-on-transparent - lift them off the bright patches
+    // of the banner.
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+  }
+
+  // Logos with a `position:` are pinned to a corner instead of sitting in
+  // the centred row.
+  img[class^="hsma-splash-logo--"] {
+    position: absolute;
+    height: 80px;
+    max-width: 45%;
+  }
+
+  .hsma-splash-logo--top-left { top: 5%; left: 4%; }
+  .hsma-splash-logo--top-right { top: 5%; right: 4%; }
+  .hsma-splash-logo--bottom-left { bottom: 5%; left: 4%; }
+  .hsma-splash-logo--bottom-right { bottom: 5%; right: 4%; }
+
+  .hsma-splash-logo--top-centre,
+  .hsma-splash-logo--top-center,
+  .hsma-splash-logo--bottom-centre,
+  .hsma-splash-logo--bottom-center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hsma-splash-logo--top-centre,
+  .hsma-splash-logo--top-center { top: 5%; }
+  .hsma-splash-logo--bottom-centre,
+  .hsma-splash-logo--bottom-center { bottom: 5%; }
+}
+
+// reveal.js adds the splash slide's data-state as a class on the viewport
+// while it is current, so the deck chrome can be hidden for that slide only.
+// !important beats the inline visibility the reveal-header plugin sets.
+.reveal-viewport.hsma-splash {
+  .reveal-header,
+  .slide-logo,
+  .slide-number,
+  .footer,
+  .verticator {
+    visibility: hidden !important;
+  }
+}
+
 .hsma-title-grid {
   position: absolute;
   inset: 0;
@@ -62,6 +130,99 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
       width: auto;
       height: auto;
     }
+
+    // White/light logos: drop the plate or swap it for the dark scrim
+    &.hsma-ts-partner--none {
+      background: transparent;
+      padding: 0;
+
+      img {
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+      }
+    }
+
+    &.hsma-ts-partner--dark {
+      background: $hsma-title-scrim;
+    }
+  }
+
+  // Main video panel, bottom-right, level with the text block. Narrow
+  // enough to clear the text block's 56% max-width.
+  .hsma-ts-video {
+    bottom: 6%;
+    right: 4%;
+    width: 34%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    line-height: 0;
+
+    img,
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0;
+    }
+
+    img,
+    video,
+    iframe {
+      // reveal.js caps media at 95%, which leaves a strip down the right edge
+      max-width: 100%;
+      max-height: none;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      margin: 0;
+    }
+  }
+
+  // `no-controls: true` - also block the mouse, so hovering can't bring up
+  // YouTube's title bar/buttons. reveal.js still plays/pauses it.
+  .hsma-ts-video.hsma-ts-no-controls iframe,
+  .hsma-ts-video.hsma-ts-no-controls video {
+    pointer-events: none;
+  }
+
+  // YouTube always flashes its title/buttons overlay for ~2-3s when playback
+  // starts, and no embed parameter turns that off - so keep the embed
+  // invisible (thumbnail showing through from the slot) until it has gone.
+  // Re-runs every time the slide becomes .present.
+  .hsma-ts-video.hsma-ts-no-controls {
+    background-color: #000;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+.reveal .slides section.present .hsma-ts-video.hsma-ts-no-controls iframe {
+  animation: hsma-yt-fade-in 0.6s ease 3.5s both;
+}
+
+@keyframes hsma-yt-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hsma-title-slide,
+.hsma-title {
+  .hsma-ts-video-placeholder {
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $hsma-title-scrim;
+    border: 2px dashed rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.6em;
+    line-height: 1.2;
   }
 
   // Bottom-right row of small media panels
@@ -92,6 +253,17 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
     width: 100%;
     height: auto;
     border-radius: 8px;
+  }
+
+  // `bare: true` - no shadow/rounding, e.g. for a transparent logo
+  .hsma-ts-slot.hsma-ts-media-a.hsma-ts-bare {
+    box-shadow: none;
+    border-radius: 0;
+
+    img,
+    video {
+      border-radius: 0;
+    }
   }
 
   // Text block: module title / session subtitle / author / tagline
@@ -168,7 +340,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
 // Fallback: when none of the extra slots are used, centre the text block
 // like the original stock title slide so plain decks are unaffected.
-.hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-media-row, .hsma-ts-title-image)) {
+.hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-video, .hsma-ts-media-row, .hsma-ts-title-image)) {
   .hsma-ts-text {
     position: static;
     max-width: none;
