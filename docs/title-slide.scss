@@ -1,6 +1,7 @@
 /*-- scss:defaults --*/
 
 $hsma-title-author-color: #7ac943 !default;
+$hsma-title-font-size: 51px !default; // ~1.5x the session title (34px)
 $hsma-title-tagline-color: #ffe600 !default;
 $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
@@ -56,6 +57,8 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
     position: absolute;
   }
 
+  // Default size; a logo's own `height:` overrides both (set inline), so
+  // what you ask for is what you get even if it's wider than 45%.
   img[class^="hsma-splash-logo--"] {
     height: 80px;
     max-width: 45%;
@@ -127,6 +130,24 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
     width: 20%;
     border-radius: 8px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  }
+
+  // `position: right` - right-hand column instead, under the partner logo
+  // (which ends ~8% down), pushing the QR code down to make room
+  .hsma-ts-media-a.hsma-ts-media-a--right {
+    top: 11%;
+    left: auto;
+    right: 4%;
+  }
+
+  .hsma-ts-media-a--right ~ .hsma-ts-qr {
+    top: 24%;
+  }
+
+  // Countdown timer (`title-countdown:`), top-left
+  .hsma-ts-countdown {
+    top: 4%;
+    left: 4%;
   }
 
   // Funder / partner logo, top-right, on a white plate
@@ -220,7 +241,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
   animation: hsma-yt-fade-in 0.6s ease 3.5s both;
 }
 
-// Countdown timer (`countdown:` on a splash logo or on title-media-a), driven
+// Countdown timer (`title-countdown:`, or `countdown:` on a splash logo), driven
 // by resources/countdown.html. Hangs off the right-hand side of the
 // logo it belongs to, so the logo stays where it is.
 .hsma-countdown {
@@ -259,10 +280,13 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
   }
 }
 
-// Smaller beside the title slide's top-left logo
-.hsma-ts-media-a .hsma-countdown {
+// The title slide's timer has a slot of its own rather than hanging off a
+// logo
+.hsma-ts-countdown .hsma-countdown {
+  position: static;
+  transform: none;
+  margin: 0;
   font-size: 64px;
-  margin-left: 32px;
 }
 
 @keyframes hsma-countdown-pulse {
@@ -376,6 +400,43 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
 
+    // Image sitting just above the box (`title-box-image`): pinned to the
+    // box's left/right edges so it always matches the box's width, with the
+    // height following the image. Out of flow, so it doesn't change how the
+    // box sizes itself.
+    .hsma-ts-box-image {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 100%;
+      margin-bottom: 12px;
+      line-height: 0;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        border-radius: 12px;
+      }
+    }
+
+    .hsma-ts-box-image-placeholder {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $hsma-title-scrim;
+      border: 2px dashed rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      box-sizing: border-box;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.6em;
+      line-height: 1.2;
+    }
+
     .hsma-ts-title-image {
       width: 30%;
       max-width: 160px;
@@ -387,6 +448,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
       margin: 0 0 0.25rem 0;
       text-align: left;
       width: auto;
+      font-size: $hsma-title-font-size;
     }
 
     p.subtitle {
@@ -413,7 +475,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
     .quarto-title-author-name {
       color: $hsma-title-author-color;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     p.hsma-ts-tagline {
@@ -435,7 +497,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
 // Fallback: when none of the extra slots are used, centre the text block
 // like the original stock title slide so plain decks are unaffected.
-.hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-video, .hsma-ts-qr, .hsma-ts-media-row, .hsma-ts-title-image)) {
+.hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-video, .hsma-ts-qr, .hsma-ts-countdown, .hsma-ts-media-row, .hsma-ts-title-image, .hsma-ts-box-image)) {
   .hsma-ts-text {
     position: static;
     max-width: none;

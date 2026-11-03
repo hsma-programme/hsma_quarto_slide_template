@@ -4,11 +4,11 @@ $if(splash)$
 $for(splash.logos)$
 $if(it.countdown)$
 <div class="hsma-splash-logo-group$if(it.position)$ hsma-splash-logo--$it.position$$endif$">
-<img src="$it.image$" alt="$if(it.alt)$$it.alt$$endif$"$if(it.height)$ style="height: $it.height$;"$endif$>
+<img src="$it.image$" alt="$if(it.alt)$$it.alt$$endif$"$if(it.height)$ style="height: $it.height$; max-width: none;"$endif$>
 <div class="hsma-countdown" data-minutes="$it.countdown$" role="timer" title="Click to pause/resume, double-click to restart"></div>
 </div>
 $else$
-<img src="$it.image$" alt="$if(it.alt)$$it.alt$$endif$"$if(it.position)$ class="hsma-splash-logo--$it.position$"$endif$$if(it.height)$ style="height: $it.height$;"$endif$>
+<img src="$it.image$" alt="$if(it.alt)$$it.alt$$endif$"$if(it.position)$ class="hsma-splash-logo--$it.position$"$endif$$if(it.height)$ style="height: $it.height$; max-width: none;"$endif$>
 $endif$
 $endfor$
 </div>
@@ -18,15 +18,18 @@ $endif$
 <section id="$idprefix$title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$ class="quarto-title-block hsma-title-slide">
 <div class="hsma-title-grid">
 
+$if(title-countdown)$
+<div class="hsma-ts-slot hsma-ts-countdown">
+<div class="hsma-countdown" data-minutes="$title-countdown$" role="timer" title="Click to pause/resume, double-click to restart"></div>
+</div>
+$endif$
+
 $if(title-media-a)$
-<div class="hsma-ts-slot hsma-ts-media-a$if(title-media-a.bare)$ hsma-ts-bare$endif$">
+<div class="hsma-ts-slot hsma-ts-media-a$if(title-media-a.position)$ hsma-ts-media-a--$title-media-a.position$$endif$$if(title-media-a.bare)$ hsma-ts-bare$endif$">
 $if(title-media-a.video)$
 <video src="$title-media-a.video$"$if(title-media-a.poster)$ poster="$title-media-a.poster$"$endif$ muted loop playsinline controls$if(title-media-a.autoplay)$ autoplay$endif$></video>
 $elseif(title-media-a.image)$
 <img src="$title-media-a.image$" alt="$if(title-media-a.alt)$$title-media-a.alt$$endif$">
-$endif$
-$if(title-media-a.countdown)$
-<div class="hsma-countdown" data-minutes="$title-media-a.countdown$" role="timer" title="Click to pause/resume, double-click to restart"></div>
 $endif$
 </div>
 $endif$
@@ -38,6 +41,16 @@ $if(partner-logo)$
 $endif$
 
 <div class="hsma-ts-text">
+
+$if(title-box-image)$
+<div class="hsma-ts-box-image">
+$if(title-box-image.image)$
+<img src="$title-box-image.image$" alt="$if(title-box-image.alt)$$title-box-image.alt$$endif$">
+$elseif(title-box-image.placeholder)$
+<div class="hsma-ts-box-image-placeholder">Image goes here</div>
+$endif$
+</div>
+$endif$
 
 $if(title-image.video)$
 <video class="hsma-ts-slot hsma-ts-title-image" src="$title-image.video$"$if(title-image.poster)$ poster="$title-image.poster$"$endif$ muted loop playsinline controls$if(title-image.autoplay)$ autoplay$endif$></video>

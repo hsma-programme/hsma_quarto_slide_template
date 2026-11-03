@@ -1,10 +1,9 @@
 ---
-title: "Module Title"
-subtitle: "Session Title"
+title: "Module x 'I want to do a thing, and use this to achieve something'"
+subtitle: "Session 0A: A session about a thing"
 author:
     name: Session Lead, Coauthors
-    affiliation: Health Service Modelling Associates Programme
-tagline: "SimPy the Best"
+tagline: "A spectacular pun"
 splash:
   logos:
     - image: "assets/nihr_logo_trimmed.png"
@@ -14,7 +13,7 @@ splash:
     - image: "assets/hsma_logo_tall_tagline_trimmed.png"
       alt: "HSMA logo - Learn, Apply, Implement"
       position: bottom-centre
-      height: "260px"
+      height: "600px"
 partner-logo: "assets/nihr_logo_trimmed.png"
 partner-logo-alt: "NIHR logo"
 partner-logo-plate: none # the NIHR logo is white - it vanishes on the default white plate
@@ -29,14 +28,19 @@ title-video:
   no-controls: true # no player controls/hover overlay, no click-to-pause; YouTube shows its thumbnail for ~3.5s to hide its start-up overlay
 qr-code: "https://hsma-programme.github.io/hsma_quarto_slide_template/" # QR code to the hosted deck: `auto` (from the git remote) or a URL, e.g. "https://..."
 qr-code-caption: "Get the slides"
+title-box-image:
+  placeholder: true # dashed "Image goes here" box - replace with `image:` (+ `alt:`)
+  # image: "assets/my_banner.png"
+  # alt: "Description of the image"
 title-audio:
   src: "https://github.com/hsma-programme/hsma_assets/raw/refs/heads/main/h6_theme.mp3"
   loop: false
+title-countdown: true # top-left timer, starting when this slide is reached: true = 10 minutes, or e.g. 5 / 2.5 / "5:30"
 title-media-a:
   image: "assets/hsma_logo.png"
   alt: "HSMA logo"
   bare: true # no shadow box behind the transparent logo
-  countdown: true # timer beside this logo, starting when this slide is reached: true = 10 minutes, or e.g. 5 / 2.5 / "5:30"
+  position: right # under the NIHR logo; omit for top-left
 format:
   live-revealjs:
     pagetitle: "HSMA Session"
@@ -385,9 +389,12 @@ used to build this deck's title slide:
 ## Custom title slide layout (continued)
 
 - `title-image` — a small image/GIF (or `video:`) shown above the title text
-- `title-media-a` — a single image/video panel, top-left of the slide (`bare: true` drops its shadow box;
-  `countdown: true` adds a 10-minute timer beside it, or give minutes / `"m:ss"`)
+- `title-media-a` — a single image/video panel, top-left of the slide (`position: right` moves it
+  under the partner logo; `bare: true` drops its shadow box)
+- `title-countdown` — a timer, top-left: `true` = 10 minutes, or give minutes / `"m:ss"`
 - `title-media` — a list of image/video panels, bottom-right of the slide
+- `title-box-image` — an image just above the title box, matching its width (`image:`/`alt:`,
+  or `placeholder: true`)
 - `title-video` — a video panel, bottom-right: `youtube:` (video ID) or `video:` (file); `no-controls: true` hides the player UI; `placeholder: true` shows an empty box
 
 ## Custom title slide layout (continued)
