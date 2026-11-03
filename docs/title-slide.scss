@@ -52,10 +52,25 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
   // Logos with a `position:` are pinned to a corner instead of sitting in
   // the centred row.
-  img[class^="hsma-splash-logo--"] {
+  [class*="hsma-splash-logo--"] {
     position: absolute;
+  }
+
+  img[class^="hsma-splash-logo--"] {
     height: 80px;
     max-width: 45%;
+  }
+
+  // A logo with `countdown:` - the timer hangs off the logo's right-hand
+  // side so the logo itself stays exactly where `position:` puts it.
+  .hsma-splash-logo-group {
+    line-height: 0;
+
+    img {
+      display: block;
+      height: 80px;
+      max-width: none;
+    }
   }
 
   .hsma-splash-logo--top-left { top: 5%; left: 4%; }
@@ -203,6 +218,55 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
 .reveal .slides section.present .hsma-ts-video.hsma-ts-no-controls iframe {
   animation: hsma-yt-fade-in 0.6s ease 3.5s both;
+}
+
+// Countdown timer (`countdown:` on a splash logo or on title-media-a), driven
+// by resources/countdown.html. Hangs off the right-hand side of the
+// logo it belongs to, so the logo stays where it is.
+.hsma-countdown {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 48px;
+  white-space: nowrap;
+  font-family: "HSMA Display", "Lexend", sans-serif;
+  font-size: 96px;
+  line-height: 1;
+  color: #fff;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+  cursor: pointer;
+  user-select: none;
+
+  // Fixed-width digit cells so the timer doesn't jiggle as it counts
+  // (the HSMA font's digits aren't tabular).
+  span {
+    display: inline-block;
+    width: 0.62em;
+    text-align: center;
+  }
+
+  span.hsma-countdown-sep {
+    width: 0.3em;
+  }
+
+  &.is-paused {
+    opacity: 0.5;
+  }
+
+  &.is-done {
+    animation: hsma-countdown-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+// Smaller beside the title slide's top-left logo
+.hsma-ts-media-a .hsma-countdown {
+  font-size: 64px;
+  margin-left: 32px;
+}
+
+@keyframes hsma-countdown-pulse {
+  50% { opacity: 0.35; }
 }
 
 @keyframes hsma-yt-fade-in {

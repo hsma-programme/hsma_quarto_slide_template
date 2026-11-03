@@ -34,6 +34,7 @@ title-media-a:
   image: "assets/hsma_logo.png"
   alt: "HSMA logo"
   bare: true # no shadow box behind the transparent logo
+  countdown: true # timer beside this logo, starting when this slide is reached: true = 10 minutes, or e.g. 5 / 2.5 / "5:30"
 format:
   live-revealjs:
     pagetitle: "HSMA Session"
@@ -382,7 +383,8 @@ used to build this deck's title slide:
 ## Custom title slide layout (continued)
 
 - `title-image` — a small image/GIF (or `video:`) shown above the title text
-- `title-media-a` — a single image/video panel, top-left of the slide (`bare: true` drops its shadow box)
+- `title-media-a` — a single image/video panel, top-left of the slide (`bare: true` drops its shadow box;
+  `countdown: true` adds a 10-minute timer beside it, or give minutes / `"m:ss"`)
 - `title-media` — a list of image/video panels, bottom-right of the slide
 - `title-video` — a video panel, bottom-right: `youtube:` (video ID) or `video:` (file); `no-controls: true` hides the player UI; `placeholder: true` shows an empty box
 
