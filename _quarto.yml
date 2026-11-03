@@ -1,6 +1,14 @@
 project:
   title: "Title"
-  output-dir: docs
+  # output-dir is deliberately NOT set here -- always pass it on the command
+  # line instead (`quarto render --output-dir docs`, see README.md). Setting
+  # it in this file makes Quarto anchor `quarto preview <file>` for any
+  # ad-hoc file not in project.render (e.g. previewing a single
+  # _SECTION_*.qmd on its own) at output-dir as its web root, even though
+  # that file's own rendered output still lands next to the source at the
+  # project root -- the preview server then can't actually serve it (browser
+  # gets a broken /../<file>.html 404). See _docs_cleanup.py's docstring.
+  execute-dir: project
   resources:
     - assets/
 
@@ -40,7 +48,6 @@ docs-keep:
   - _brand.yml
   - code_examples
   - fullscreen
-  - sections
   - sample_code
 
 

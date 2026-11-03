@@ -4,7 +4,7 @@ This provides a starting point for making HSMA slides using the Quarto platform.
 
 Make your changes to the `slides.qmd` file.
 
-Then run `quarto render`.
+Then run `quarto render --output-dir docs` (always pass `--output-dir` explicitly -- see "Publishing, and the docs/ folder" below for why).
 
 The final output can be hosted on Github Pages.
 
@@ -23,7 +23,7 @@ uv sync
 That creates a `.venv` in the project folder with everything needed: the Jupyter stack that executes the code cells, `pyyaml` for the docs cleanup hook, and `plotly`/`pandas` for the example cells that actually run at render time. Then render with:
 
 ```bash
-uv run quarto render
+uv run quarto render --output-dir docs
 ```
 
 ### If the render can't find your packages
@@ -55,6 +55,8 @@ Quarto's default (non-website) project type copies the **entire project director
 To customise it for your deck, **edit the `docs-keep:` list in `_quarto.yml`, not the Python**. Add any folder your deck links to at runtime (extra images, PDFs, data files, handouts). If you drop something the deck actually needs, the deck breaks silently on the published site — so open `docs/index.html` and click through after changing the list.
 
 Also in `_quarto.yml`, the `render:` list names the deck's entry file. If you rename `slides.qmd`, update it to match.
+
+**Always render with `quarto render --output-dir docs` (not bare `quarto render`), and don't add `output-dir` to `_quarto.yml`.** Setting it in the YAML instead of the command line breaks `quarto preview` of a single ad-hoc file not in `render:` — e.g. previewing one `_SECTION_*.qmd` on its own (see "Fast iteration on a single section" below): Quarto anchors the preview server at `output-dir` even though the previewed file's own output still lands at the project root, so the browser gets a broken 404. See `_docs_cleanup.py`'s docstring for the full explanation.
 
 ### Troubleshooting
 

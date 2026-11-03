@@ -19,10 +19,20 @@ So this script runs after every render and deletes everything in the output
 directory that isn't on an explicit allowlist.
 
 CONFIGURATION LIVES IN `_quarto.yml`, NOT IN HERE:
-  * the output directory comes from `project: output-dir:`
   * the allowlist comes from the top-level `docs-keep:` list
 
 Edit that list -- not this file -- when your deck gains a new folder.
+
+WHY output-dir ISN'T IN `_quarto.yml`: it's deliberately passed on the
+command line instead (`quarto render --output-dir docs`, see README.md).
+Setting `project: output-dir:` in the YAML makes Quarto anchor `quarto
+preview <file>` for any ad-hoc file not in `project: render:` (e.g.
+previewing a single `_SECTION_*.qmd` on its own) at that output-dir as its
+web server root -- even though the ad-hoc file's own rendered output still
+lands next to the source at the project root, so the browser gets a broken
+`/../<file>.html` 404. This script still works either way: it reads
+`QUARTO_PROJECT_OUTPUT_DIR`, which Quarto sets for pre/post-render scripts
+regardless of whether output-dir came from the command line or the YAML.
 """
 
 import os
