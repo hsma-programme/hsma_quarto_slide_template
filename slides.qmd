@@ -29,8 +29,8 @@ title-video:
 qr-code: "https://hsma-programme.github.io/hsma_quarto_slide_template/" # QR code to the hosted deck: `auto` (from the git remote) or a URL, e.g. "https://..."
 qr-code-caption: "Get the slides"
 title-box-image:
-  placeholder: true # dashed "Image goes here" box - replace with `image:` (+ `alt:`)
-  # image: "assets/my_banner.png"
+  placeholder: false # dashed "Image goes here" box - replace with `image:` (+ `alt:`)
+  image: "assets/sample_front_image.png"
   # alt: "Description of the image"
 title-audio:
   src: "https://github.com/hsma-programme/hsma_assets/raw/refs/heads/main/h6_theme.mp3"

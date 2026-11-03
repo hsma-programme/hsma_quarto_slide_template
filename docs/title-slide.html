@@ -40,7 +40,7 @@ $if(partner-logo)$
 </div>
 $endif$
 
-<div class="hsma-ts-text">
+<div class="hsma-ts-text-stack">
 
 $if(title-box-image)$
 <div class="hsma-ts-box-image">
@@ -51,6 +51,8 @@ $elseif(title-box-image.placeholder)$
 $endif$
 </div>
 $endif$
+
+<div class="hsma-ts-text">
 
 $if(title-image.video)$
 <video class="hsma-ts-slot hsma-ts-title-image" src="$title-image.video$"$if(title-image.poster)$ poster="$title-image.poster$"$endif$ muted loop playsinline controls$if(title-image.autoplay)$ autoplay$endif$></video>
@@ -101,6 +103,7 @@ $if(date)$
   <p class="date">$date$</p>
 $endif$
 
+</div>
 </div>
 
 $-- enablejsapi=1 must be in the src from the start: otherwise reveal.js

@@ -1,7 +1,12 @@
 /*-- scss:defaults --*/
 
 $hsma-title-author-color: #7ac943 !default;
-$hsma-title-font-size: 51px !default; // ~1.5x the session title (34px)
+$hsma-title-font-size: 31px !default;
+$hsma-subtitle-font-size: 41px !default;
+$hsma-author-font-size: 32px !default;
+// Top of the column holding the title box (and the image above it): clear
+// of the top-left countdown timer (4% + 64px, ~12%) with a small gap.
+$hsma-title-stack-top: 15% !default;
 $hsma-title-tagline-color: #ffe600 !default;
 $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
@@ -37,8 +42,6 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
   align-items: center;
   justify-content: center;
   gap: 8%;
-  transform: scaleX(calc(1 / 1.1)); // see .hsma-title-grid
-  transform-origin: center;
 
   img {
     height: 120px;
@@ -111,10 +114,10 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 .hsma-title-grid {
   position: absolute;
   inset: 0;
-  // custom.scss applies `transform: scaleX(1.1)` to .reveal .slides, which
-  // would stretch logos/media 10% horizontally - undo it on our own wrapper.
-  transform: scaleX(calc(1 / 1.1));
-  transform-origin: center;
+  // No counter-transform for custom.scss's `scaleX(1.1)` on .reveal .slides:
+  // reveal.js sets its own inline transform on that element at every window
+  // size, so the stretch never applies - undoing it squashed every logo and
+  // image on this slide (and the splash slide) to 91% width.
 }
 
 .hsma-title-slide,
@@ -385,6 +388,66 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
     }
   }
 
+  // Column holding the title box, sitting on the box's usual spot and
+  // reaching up to just under the timer. The box sits at the bottom; an
+  // optional image (`title-box-image`) takes whatever room is left above
+  // it, so it can never run into the timer.
+  .hsma-ts-text-stack {
+    position: absolute;
+    left: 4%;
+    bottom: 6%;
+    top: $hsma-title-stack-top;
+    max-width: 56%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    > .hsma-ts-text {
+      position: static;
+      max-width: none;
+    }
+  }
+
+  // The image: as wide as the box (`width: 0; min-width: 100%` stops the
+  // image's own size from widening the column), shrinking - aspect ratio
+  // kept, centred - when the space above the box is too short for it.
+  .hsma-ts-box-image {
+    flex: 0 1 auto;
+    min-height: 0;
+    width: 0;
+    min-width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    line-height: 0;
+
+    img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0;
+      border-radius: 12px;
+    }
+  }
+
+  .hsma-ts-box-image-placeholder {
+    width: 100%;
+    height: 140px;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $hsma-title-scrim;
+    border: 2px dashed rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    box-sizing: border-box;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.6em;
+    line-height: 1.2;
+  }
+
   // Text block: module title / session subtitle / author / tagline
   .hsma-ts-text {
     position: absolute;
@@ -399,43 +462,6 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
     border-radius: 12px;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
-
-    // Image sitting just above the box (`title-box-image`): pinned to the
-    // box's left/right edges so it always matches the box's width, with the
-    // height following the image. Out of flow, so it doesn't change how the
-    // box sizes itself.
-    .hsma-ts-box-image {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 100%;
-      margin-bottom: 12px;
-      line-height: 0;
-
-      img {
-        display: block;
-        width: 100%;
-        height: auto;
-        max-width: none;
-        max-height: none;
-        margin: 0;
-        border-radius: 12px;
-      }
-    }
-
-    .hsma-ts-box-image-placeholder {
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: $hsma-title-scrim;
-      border: 2px dashed rgba(255, 255, 255, 0.6);
-      border-radius: 12px;
-      box-sizing: border-box;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 0.6em;
-      line-height: 1.2;
-    }
 
     .hsma-ts-title-image {
       width: 30%;
@@ -455,6 +481,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
       margin: 0 0 0.5rem 0 !important;
       text-align: left;
       width: auto;
+      font-size: $hsma-subtitle-font-size;
       font-weight: 400;
       opacity: 0.9;
     }
@@ -475,6 +502,7 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 
     .quarto-title-author-name {
       color: $hsma-title-author-color;
+      font-size: $hsma-author-font-size;
       font-weight: 400;
     }
 
@@ -498,6 +526,11 @@ $hsma-title-scrim: rgba(0, 0, 0, 0.45) !default;
 // Fallback: when none of the extra slots are used, centre the text block
 // like the original stock title slide so plain decks are unaffected.
 .hsma-title-slide:not(:has(.hsma-ts-media-a, .hsma-ts-partner, .hsma-ts-video, .hsma-ts-qr, .hsma-ts-countdown, .hsma-ts-media-row, .hsma-ts-title-image, .hsma-ts-box-image)) {
+  .hsma-ts-text-stack {
+    inset: 0;
+    max-width: none;
+  }
+
   .hsma-ts-text {
     position: static;
     max-width: none;
