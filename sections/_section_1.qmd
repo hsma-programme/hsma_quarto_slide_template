@@ -1,3 +1,0 @@
-# Section Example
-
-I am a section that's stored in another folder.

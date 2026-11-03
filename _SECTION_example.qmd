@@ -1,0 +1,11 @@
+# Section Example
+
+This deck's slide content can be split into separate `_SECTION_*.qmd` files
+at the project root and pulled into `slides.qmd` with `{{< include >}}` --
+see the top of `slides.qmd` for how this file is wired in, and the "Fast
+iteration on a single section" note in README.md for how to preview a
+section like this one on its own.
+
+## Here's a sample slide
+
+You can see that while there are a few quirks, the separate slides can display primarily as they will in the final deck.

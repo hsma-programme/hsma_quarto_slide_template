@@ -86,8 +86,12 @@ body {
 }
 
 // Default: content starts at the top for regular slides
+// The grey box is applied to every top-level section rather than only to
+// `section.stack`, because reveal.js adds `.stack` at runtime when slides nest
+// under a `#` heading. A single _SECTION_*.qmd previewed on its own has no
+// such nesting, so with a `.stack`-only rule none of its slides got a box.
 .reveal .slides > section {
-  /* background-color: rgba(56, 56, 56, 0.8); */
+  background-color: rgba(56, 56, 56, 0.8);
   border-radius: 12px;
   padding: 20px;
   box-sizing: border-box;
@@ -168,22 +172,14 @@ iframe.stlite {
 
 
 // Slides with no grey box
-// .reveal .slides section.no-box,
-// .reveal .slides > section.no-box,
-// .reveal .slides > section.stack > section.no-box {
-//   background-color: transparent !important;
-//   border-radius: 0 !important;
-//   box-shadow: none !important;
-// }
-
-// Slides with no grey box
-.reveal .slides > section.stack:has(> section.no-box) {
+// (no `.stack` in these selectors either, for the same reason as above)
+.reveal .slides > section:has(> section.no-box) {
   background-color: transparent !important;
   border-radius: 0 !important;
   box-shadow: none !important;
 }
 
-.reveal .slides > section.stack:has(> section.no-box) > section:not(.no-box) {
+.reveal .slides > section:has(> section.no-box) > section:not(.no-box) {
   background-color: rgba(56, 56, 56, 0.8) !important;
   border-radius: 12px !important;
   box-sizing: border-box !important;
@@ -198,14 +194,25 @@ iframe.stlite {
 }
 
 // # header slide should be centred vertically
-.reveal .slides > section.stack:has(> section.no-box) > section:first-child {
+.reveal .slides > section:has(> section.no-box) > section:first-child {
   justify-content: center !important;
 }
 
 /* Ensure column containers stretch to full width inside flex-slides */
-.reveal .slides section.stack:has(> section.no-box) section > .columns {
+.reveal .slides section:has(> section.no-box) section > .columns {
   width: 100% !important;
   flex-grow: 1; /* Allows the columns to fill vertical space if needed */
+}
+
+// Same fix for ordinary grey-box slides. The flex-column slide layout above
+// uses `align-items: flex-start`, so a `.columns` block is never stretched to
+// the slide width -- it shrink-wraps to its own text. Each `.columns` row then
+// gets a width set by its longest cell, and its 50/50 split point moves with
+// it, so the second column drifts out of alignment between rows. Forcing full
+// width gives every row one shared split point.
+.reveal .slides > section > .columns,
+.reveal .slides > section > section > .columns {
+  width: 100%;
 }
 
 .bg-amber { background-color:rgb(211, 123, 0) ; }
@@ -308,6 +315,12 @@ iframe.stlite {
 // 30px title bar feels cramped, raise --codewindow-header-height alongside it.
 .reveal .codewindow {
   font-size: 0.50em;
+}
+
+// Let selected code windows grow beyond Quarto's default code height limit.
+// Usage: ::: {.codewindow .python .full-height-code}
+.reveal .codewindow.full-height-code pre code {
+  max-height: none;
 }
 
 // The file tab just inherits the window's font-size, so the filename renders at

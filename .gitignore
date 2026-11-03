@@ -19,3 +19,12 @@ _quarto_internal_scss_error.scss
 # NOTE: do NOT add `docs/` here. It is the GitHub Pages source and must stay
 # committable, otherwise every render's new content-hashed filenames get
 # skipped by `git add -A` and you need `git add -f` forever.
+
+# scratch output dir for single-section preview renders, e.g.
+# quarto preview _SECTION_foo.qmd --output-dir _preview
+_preview/
+
+_SECTION_*.html
+
+_SECTION_*/*
+slides_files/
