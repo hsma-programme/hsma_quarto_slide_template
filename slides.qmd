@@ -219,7 +219,7 @@ Then this will appear when you're ready.
 
 ## Simple boxes 1
 
-::: {.value-box .bg-amber style="font-size: 1.25rem;"}
+::: {.value-box color="bg-amber" font-color="black" font-size="1.25rem"}
 
 **Value boxes**
 
@@ -272,7 +272,7 @@ This only works on second level slides - not # level slides.
 
 ::: {.fragment .fade-in-then-semi-out}
 
-::: {.value-box .bg-light-blue style="font-size: 1.25rem;"}
+::: {.value-box color="bg-light-blue" font-color="black" font-size="1.25rem"}
 
 **Value boxes**
 
@@ -284,7 +284,7 @@ A simple value box can help convey points, especially when combined with fragmen
 
 ::: {.fragment}
 
-::: {.value-box .bg-amber style="font-size: 1.25rem;"}
+::: {.value-box color="bg-amber" font-color="black" font-size="1.25rem"}
 
 **Value boxes**
 
@@ -300,11 +300,11 @@ Like this!
 
 ## Icon boxes
 
-::: {.value-box icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center"}
+::: {.value-box icon="bi-arrow-down-up" color="bg-light-blue" font-color="black" icon-color="black" width="60%" align="center"}
 And here's a more advanced type of box with an icon
 :::
 
-::: {.value-box value="Big text" icon="bi-arrow-down-up" color="bg-light-blue" width="60%" align="center" fragment="fade-in-then-out"}
+::: {.value-box value="Big text" icon="bi-arrow-down-up" color="bg-light-blue" font-color="black" icon-color="black" width="60%" align="center" fragment="fade-in-then-out"}
 And here's a more advanced type of box with an icon and a value
 :::
 
