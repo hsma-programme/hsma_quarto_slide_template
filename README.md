@@ -66,6 +66,37 @@ Also in `_quarto.yml`, the `render:` list names the deck's entry file. If you re
 
 **The cleanup did nothing and printed a warning.** That's deliberate — if `docs-keep` is missing or empty, the script refuses to guess what's safe to delete rather than emptying your output folder.
 
+## Fast iteration on a single section
+
+Shared format/theme/plugin config lives in `_metadata.yml`, which Quarto
+merges into every document in the project -- so a single section can be
+rendered/previewed standalone with the full live-revealjs styling, without
+duplicating the header and without rebuilding the whole deck. Both of these
+work (including the VS Code "Preview" button/CodeLens, which runs the bare
+form):
+
+```
+quarto preview _SECTION_foo.qmd
+quarto preview _SECTION_foo.qmd --output-dir _preview
+```
+
+The bare form renders next to the source at the project root (gitignored:
+`_SECTION_*.html`, `_SECTION_*/*`). `--output-dir _preview` (also
+gitignored) tidies that away into one folder if you'd rather. Either way,
+never pass `--output-dir docs` for a section preview -- that's the real
+published output, and the post-render cleanup hook runs against whatever
+`--output-dir` you point it at.
+
+Splitting a deck's content into `_SECTION_*.qmd` files also lets multiple
+decks share the same pool of sections: give each deck its own `slides_*.qmd`
+(only `title`/`subtitle`/`author`/deck-specific front matter -- no
+`output-dir` key, see above), then `{{< include >}}` the subset of sections
+it needs. Give the extra deck its own `_quarto-<name>.yml` project profile
+(https://quarto.org/docs/projects/profiles.html) overriding `project.render`
+(and its own `docs-keep`, since a second deck's output files shouldn't be on
+the first deck's allowlist or vice versa), and always render it with
+`quarto render --profile <name> --output-dir docs_<name>`.
+
 ## Custom title slide
 
 The first slide of the deck is generated from `title-slide.html` (a Quarto/Pandoc
