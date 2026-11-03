@@ -204,6 +204,17 @@ iframe.stlite {
   flex-grow: 1; /* Allows the columns to fill vertical space if needed */
 }
 
+// Same fix for ordinary grey-box slides. The flex-column slide layout above
+// uses `align-items: flex-start`, so a `.columns` block is never stretched to
+// the slide width -- it shrink-wraps to its own text. Each `.columns` row then
+// gets a width set by its longest cell, and its 50/50 split point moves with
+// it, so the second column drifts out of alignment between rows. Forcing full
+// width gives every row one shared split point.
+.reveal .slides > section > .columns,
+.reveal .slides > section > section > .columns {
+  width: 100%;
+}
+
 .bg-amber { background-color:rgb(211, 123, 0) ; }
 
 .bg-light-grey { background-color:rgb(197, 197, 197) ; }
