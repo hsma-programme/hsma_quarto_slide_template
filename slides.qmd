@@ -88,6 +88,7 @@ filters:
   - bergam0t/value-box
   - bergam0t/focus-list
   - code-fullscreen
+  - code-line-style
 ---
 
 # Section Header Example
