@@ -28,7 +28,7 @@ format:
     # embed-resources: true # comment in/out as appropriate
     chalkboard: true
     output-file: index.html # ensures picked up by github hosting
-    view-distance: 100
+    view-distance: 3 # only load slides near the current one, so GIFs/animations further on don't load (and play) too early
     height: 800 # default height and width ensure consistent behaviour on different screens
     width: 1250 # would recommend leaving this and height value as they are
     preview-links: true
