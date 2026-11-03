@@ -145,6 +145,9 @@ playback restarts from the beginning each time the title slide is shown and paus
 soon as you leave it (a YouTube video resumes where it paused rather than restarting). Browsers block sound until the viewer has interacted with the page,
 so audio plays reliably when you arrive on the title slide by advancing from the splash
 slide, but may stay silent if the page is loaded or refreshed directly on the title slide.
+A YouTube `title-video` does start in that case: reveal.js's own "play" would arrive before
+the YouTube player has loaded, so `resources/youtube-autoplay.html` waits for the player to
+report ready and starts it then.
 
 If a deck needs a fully hand-built title slide, add `data-visibility: hidden` to
 `title-slide-attributes` to hide the generated one, then build your own slide using the

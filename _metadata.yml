@@ -61,6 +61,7 @@ format:
       - file: resources/cytoscape-widget-fix.html
       - file: resources/plotly-animation-gate.html # plays Plotly animations on the current slide only
       - file: resources/countdown.html # title/splash slide countdown timer (`countdown:` key)
+      - file: resources/youtube-autoplay.html # starts autoplay YouTube embeds when the deck is loaded straight onto their slide
     revealjs-a11y:
       high-contrast: false
       alt-text-warnings: false # set to true to highlight images missing alt text
