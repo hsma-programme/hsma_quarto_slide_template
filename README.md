@@ -108,19 +108,53 @@ frontmatter keys at the top of `slides.qmd`:
 | `title`, `subtitle` | Module / session heading text |
 | `author` | As standard; the author name is coloured on the title slide |
 | `tagline` | Short strapline shown under the author name |
+| `splash` | Adds a slide *before* the title slide showing only `logos` (a list of `image:`/`alt:`, each with an optional `position:` of `top-left`/`top-centre`/`top-right`/`bottom-left`/`bottom-centre`/`bottom-right` — omit to put it in a centred row — optional `height:`, e.g. `"80px"`, and optional `countdown:` — see below) over the banner. Uses the title slide's background unless `background:` is set |
 | `partner-logo`, `partner-logo-alt` | Logo shown on a white plate, top-right |
+| `partner-logo-plate` | `none` (no plate) or `dark` (dark scrim) — for white logos, which vanish on the default white plate |
+| `title-box-image` | Image just above the title text box, always the same width as the box, height following the image. `image:` + `alt:`, or `placeholder: true` for an empty dashed box |
 | `title-image` | Small image/GIF (or `video:`) shown above the title text |
-| `title-media-a` | A single image/video panel, top-left of the slide |
+| `title-media-a` | A single image/video panel, top-left of the slide. `position: right` moves it to the right-hand column under the partner logo (the QR code moves down to make room); `bare: true` drops the shadow box (useful for transparent logos) |
+| `title-countdown` | Countdown timer, top-left of the slide — see below |
+| `title-video` | Video panel, bottom-right (shares that corner with `title-media` — use one or the other). `youtube:` (the video ID after `watch?v=`; unlisted videos work) or `video:` (a file), plus optional `autoplay: true`, `muted: true`, `loop: true`, `no-controls: true` (hides the player controls and ignores the mouse, so YouTube's hover overlay never appears — but you can't click to pause/unmute; for YouTube it also shows the video's thumbnail for the first ~3.5s on the slide, covering the title/buttons overlay YouTube always flashes when playback starts — the delay is in `title-slide.scss`) and `poster:` for files; or `image:`; or `placeholder: true` for an empty dashed box |
 | `title-media` | A list of image/video panels, bottom-right of the slide |
+| `qr-code`, `qr-code-caption` | QR code (right-hand side) to the hosted deck, with an optional caption underneath. `qr-code: auto` works out the URL; `qr-code: "https://..."` uses that URL — see below |
+| `title-audio` | `src:` (plus optional `loop: true`) — audio that starts each time the title slide is shown and stops when you navigate away |
 
 Every key is optional — a deck that sets none of them gets the original plain centred
 title/author layout. Each media slot accepts `image:` (GIFs work fine) or `video:`, plus
 optional `poster:` and `autoplay: true`.
 
+The QR code image, `assets/slides_qr.svg`, is regenerated before every render by
+`_make_slides_qr.py` (a `pre-render` hook in `_quarto.yml`) from the deck header's `qr-code:`.
+With `qr-code: auto`, a deck made from this template automatically points at its *own* GitHub
+Pages site: `https://<owner>.github.io/<repo>/`, worked out from the `origin` git remote, or the
+custom domain in `docs/CNAME`. If the deck is hosted somewhere else — e.g. you work from a
+personal fork but the organisation's copy is the published one — give the URL instead:
+`qr-code: "https://hsma-programme.github.io/my-deck/"`. The script needs the `segno` package (in
+`pyproject.toml`; `uv sync` installs it); without it the render still works but the QR code isn't
+updated.
+
+`title-countdown:` shows a countdown timer, in the HSMA Display font, top-left of the title
+slide — handy for a "starting in…" or break timer. (`countdown:` on a splash logo does the same,
+hanging off the right-hand side of that logo.) `true` counts down 10 minutes; give a number of minutes (`5`, `2.5`) or `"m:ss"`
+(`"5:30"`) for other lengths. It starts the first time its slide is reached and then keeps time
+while you move around the deck; click it to pause/resume and double-click to restart. At zero it
+shows `0:00` and pulses. Reloading the page resets it. The script is
+`resources/countdown.html`.
+
+`title-video` and `title-audio` start/stop with the slide (reveal.js `data-autoplay`):
+playback restarts from the beginning each time the title slide is shown and pauses as
+soon as you leave it (a YouTube video resumes where it paused rather than restarting). Browsers block sound until the viewer has interacted with the page,
+so audio plays reliably when you arrive on the title slide by advancing from the splash
+slide, but may stay silent if the page is loaded or refreshed directly on the title slide.
+A YouTube `title-video` does start in that case: reveal.js's own "play" would arrive before
+the YouTube player has loaded, so `resources/youtube-autoplay.html` waits for the player to
+report ready and starts it then.
+
 If a deck needs a fully hand-built title slide, add `data-visibility: hidden` to
 `title-slide-attributes` to hide the generated one, then build your own slide using the
 `.hsma-title` class together with the `.hsma-ts-*` slot classes (`.hsma-ts-text`,
-`.hsma-ts-media-a`, `.hsma-ts-partner`, `.hsma-ts-title-image`, `.hsma-ts-media-row`) to reuse
+`.hsma-ts-media-a`, `.hsma-ts-partner`, `.hsma-ts-title-image`, `.hsma-ts-video`, `.hsma-ts-media-row`) to reuse
 the same styling — see the "Custom title slide layout" slide in `slides.qmd` for an example.
 
 

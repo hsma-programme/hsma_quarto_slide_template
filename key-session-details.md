@@ -2,10 +2,6 @@ This is a teaching session for the Health Service Modelling Associates Programme
 
 Each session in HSMA is 6 hours in length.
 
-## HSMA's approach to
-
-
-
 ## This Session
 
 The aim of this session is to help them understand how
