@@ -32,3 +32,9 @@ _SECTION_*.html
 # styling (theme 404s on GitHub Pages).
 /_SECTION_*/
 /slides_files/
+
+# `quarto preview slides.qmd` (and VS Code's Preview button) render without
+# --output-dir, so the deck's `output-file: index.html` lands here at the
+# root as a stray copy. Root-anchored for the same reason as above: the
+# published deck is docs/index.html, which must stay tracked.
+/index.html
